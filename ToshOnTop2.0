@@ -1339,3 +1339,56 @@ else
 end
 
 print("Improved Emote Wheel loaded! Press ',' (comma) to open.")
+
+-- wait for UI to load
+task.wait(2)
+
+local favoritesHidden = true
+
+local function updateFavorites()
+    for _, v in pairs(game:GetDescendants()) do
+        if v:IsA("ImageButton") or v:IsA("TextButton") then
+            local name = v.Name:lower()
+            if name:find("fav") or name:find("star") then
+                v.Visible = not favoritesHidden
+            end
+        end
+    end
+end
+
+-- create GUI
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "FavToggleGui"
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 160, 0, 40)
+button.Position = UDim2.new(0, 20, 0, 100)
+button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextScaled = true
+button.Font = Enum.Font.SourceSansBold
+button.Text = "Favorites: OFF"
+button.Parent = gui
+
+-- make draggable
+button.Active = true
+button.Draggable = true
+
+-- toggle logic
+button.MouseButton1Click:Connect(function()
+    favoritesHidden = not favoritesHidden
+    updateFavorites()
+
+    if favoritesHidden then
+        button.Text = "Favorites: OFF"
+    else
+        button.Text = "Favorites: ON"
+    end
+end)
+
+-- run once at start
+updateFavorites()
+ [SWAG], 
+

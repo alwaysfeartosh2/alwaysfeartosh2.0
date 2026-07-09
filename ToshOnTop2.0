@@ -769,7 +769,7 @@ local Emotes = {
 	{ name = "Around Town", id = 3576747102, icon = "rbxthumb://type=Asset&id=3576747102&w=150&h=150", price = 50, lastupdated = 1663281650, sort = {} },
 	{ name = "Borock's rage", id = 3236848555, icon = "rbxthumb://type=Asset&id=3236848555&w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
 	{ name = "Ud'zal's summoning", id = 3307604888, icon = "rbxthumb://type=Asset&id=3307604888w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
-	{ name = "T", id = 3576719440, icon = "rbxthumb://type=Asset&id=3307604888&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+	{ name = "T", id = 3576719440, icon = "rbxthumb://type=Asset&id=3576719440&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Robot", id = 3576721660, icon = "rbxthumb://type=Asset&id=3576721660&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Tilt", id = 3360692915, icon = "rbxthumb://type=Asset&id=3360692915&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Top Rock", id = 3570535774, icon = "rbxthumb://type=Asset&id=3570535774&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
@@ -781,7 +781,6 @@ local Emotes = {
 	{ name = "Stadium", id =3360686498, icon = "rbxthumb://type=Asset&id=3360686498&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Arm Wave", id =5915773155, icon = "rbxthumb://type=Asset&id=5915773155&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Head banging", id =5915779725, icon = "rbxthumb://type=Asset&id=5915779725&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-	{ name = "Face Calisthenics", id =9830731012, icon = "rbxthumb://type=Asset&id=9830731012&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "blow kiss", id =73990846892571, icon = "rbxthumb://type=Asset&id=73990846892571&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "head throw", id =85890105005757, icon = "rbxthumb://type=Asset&id=85890105005757&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Shattered", id =124305244640379, icon = "rbxthumb://type=Asset&id=124305244640379&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
@@ -790,14 +789,12 @@ local Emotes = {
 	{ name = "Andys coming", id =77935599895175, icon = "rbxthumb://type=Asset&id=77935599895175&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "propose", id =101632530228317, icon = "rbxthumb://type=Asset&id=101632530228317&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Mime", id =121558490761409, icon = "rbxthumb://type=Asset&id=121558490761409&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-        { name = "rolling crybaby", id =130726889233022, icon = "rbxthumb://type=Asset&id=130726889233022&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-        { name = "Basketball Spinning", id =93453881298436, icon = "rbxthumb://type=Asset&id=93453881298436&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-        { name = "Cursed-Floating", id =96927087453178, icon = "rbxthumb://type=Asset&id=96927087453178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-        { name = "Gojo Floating", id =79603337024412, icon = "rbxthumb://type=Asset&id=79603337024412w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-        { name = "Falling Death", id =99565933541178, icon = "rbxthumb://type=Asset&id=99565933541178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+    { name = "rolling crybaby", id =130726889233022, icon = "rbxthumb://type=Asset&id=130726889233022&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+    { name = "Basketball Spinning", id =93453881298436, icon = "rbxthumb://type=Asset&id=93453881298436&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+    { name = "Cursed-Floating", id =96927087453178, icon = "rbxthumb://type=Asset&id=96927087453178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+    { name = "Gojo Floating", id =79603337024412, icon = "rbxthumb://type=Asset&id=79603337024412w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+    { name = "Falling Death", id =99565933541178, icon = "rbxthumb://type=Asset&id=99565933541178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 }
-
-
 
 -- Top bar with title
 local TopBar = Instance.new("Frame")

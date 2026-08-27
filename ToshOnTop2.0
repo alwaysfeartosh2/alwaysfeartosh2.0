@@ -354,7 +354,7 @@ local Emotes = {
 	{ name = "Sneaky", id = 3576754235, icon = "rbxthumb://type=Asset&id=3576754235&w=150&h=150", price = 500, lastupdated = 1663281651, sort = {} },
 	{ name = "Superhero Reveal", id = 3696759798, icon = "rbxthumb://type=Asset&id=3696759798&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Heisman Pose", id = 3696763549, icon = "rbxthumb://type=Asset&id=3696763549&w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
-	{ name = "Air Guitar", id = 3696761354, icon = "rbxthumb://type=Asset&id=3696761354&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
+	{ name = "Air Guitar", id = 3696761354, icon = "rbxthumb://type=Asset&id=3696761354&w=150&h=150", price = 0, lastupdated = 3696761354, sort = {} },
 	{ name = "Hype Dance", id = 3696757129, icon = "rbxthumb://type=Asset&id=3696757129&w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
 	{ name = "Fashionable", id = 3576745472, icon = "rbxthumb://type=Asset&id=3576745472&w=150&h=150", price = 750, lastupdated = 1663281649, sort = {} },
 	{ name = "Jacks", id = 3570649048, icon = "rbxthumb://type=Asset&id=3570649048&w=150&h=150", price = 200, lastupdated = 1663281650, sort = {} },

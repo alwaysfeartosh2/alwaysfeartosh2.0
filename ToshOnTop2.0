@@ -388,11 +388,11 @@ local Emotes = {
  { name = "sleep", id =104024961010344, icon = "rbxthumb://type=Asset&id=104024961010344&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 { name = "T", id =3576719440, icon = "rbxthumb://type=Asset&id=3576719440&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 { name = "coin flip", id =128000234046934, icon = "rbxthumb://type=Asset&id=128000234046934&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
- { name = "rolling crybaby", id =130726889233022, icon = "rbxthumb://type=Asset&id=130726889233022&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-    { name = "Basketball Spinning", id =93453881298436, icon = "rbxthumb://type=Asset&id=93453881298436&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-    { name = "Cursed-Floating", id =96927087453178, icon = "rbxthumb://type=Asset&id=96927087453178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-    { name = "Gojo Floating", id =79603337024412, icon = "rbxthumb://type=Asset&id=79603337024412w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
-    { name = "Falling Death", id =99565933541178, icon = "rbxthumb://type=Asset&id=99565933541178w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
+ { name = "rolling crybaby", id =130726889233022, icon = "rbxthumb://type=Asset&id=130726889233022&w=150&h=150", price = 0, lastupdated = 130726889233022, sort = {} },
+    { name = "Basketball Spinning", id =93453881298436, icon = "rbxthumb://type=Asset&id=93453881298436&w=150&h=150", price = 0, lastupdated = 93453881298436, sort = {} },
+    { name = "Cursed-Floating", id =96927087453178, icon = "rbxthumb://type=Asset&id=96927087453178w=150&h=150", price = 0, lastupdated = 96927087453178, sort = {} },
+    { name = "Gojo Floating", id =79603337024412, icon = "rbxthumb://type=Asset&id=79603337024412w=150&h=150", price = 0, lastupdated = 79603337024412, sort = {} },
+    { name = "Falling Death", id =99565933541178, icon = "rbxthumb://type=Asset&id=99565933541178w=150&h=150", price = 0, lastupdated = 99565933541178, sort = {} },
 
 }
 

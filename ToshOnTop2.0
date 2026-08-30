@@ -1,5 +1,5 @@
--- Made by Toshiro
 local IsStudio = false
+
 local ContextActionService = game:GetService("ContextActionService")
 local HttpService = game:GetService("HttpService")
 local GuiService = game:GetService("GuiService")
@@ -17,9 +17,8 @@ local FavoritedEmotes = {}
 local CurrentPreset = 1
 local Presets = {}
 local FavoritesEnabled = true
-local CustomDragMode = false
-local DraggedEmote = nil
-
+local CustomDragMode = false 
+local DraggedEmote = nil 
 
 
 local Emotes = {
@@ -354,7 +353,7 @@ local Emotes = {
 	{ name = "Sneaky", id = 3576754235, icon = "rbxthumb://type=Asset&id=3576754235&w=150&h=150", price = 500, lastupdated = 1663281651, sort = {} },
 	{ name = "Superhero Reveal", id = 3696759798, icon = "rbxthumb://type=Asset&id=3696759798&w=150&h=150", price = 0, lastupdated = 1663281651, sort = {} },
 	{ name = "Heisman Pose", id = 3696763549, icon = "rbxthumb://type=Asset&id=3696763549&w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
-	{ name = "Air Guitar", id = 3696761354, icon = "rbxthumb://type=Asset&id=3696761354&w=150&h=150", price = 0, lastupdated = 3696761354, sort = {} },
+	{ name = "Air Guitar", id = 3696761354, icon = "rbxthumb://type=Asset&id=3696761354&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
 	{ name = "Hype Dance", id = 3696757129, icon = "rbxthumb://type=Asset&id=3696757129&w=150&h=150", price = 0, lastupdated = 1663281650, sort = {} },
 	{ name = "Fashionable", id = 3576745472, icon = "rbxthumb://type=Asset&id=3576745472&w=150&h=150", price = 750, lastupdated = 1663281649, sort = {} },
 	{ name = "Jacks", id = 3570649048, icon = "rbxthumb://type=Asset&id=3570649048&w=150&h=150", price = 200, lastupdated = 1663281650, sort = {} },
@@ -389,14 +388,10 @@ local Emotes = {
 { name = "T", id =3576719440, icon = "rbxthumb://type=Asset&id=3576719440&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 { name = "coin flip", id =128000234046934, icon = "rbxthumb://type=Asset&id=128000234046934&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 
+
 }
+
 local CurrentSort = "customorder"
-local CELL_W = 90
-local CELL_H = 82
-local CELL_PAD = 2
-local COLS = 10
-local BACKFRAME_W = COLS * (CELL_W + CELL_PAD) - CELL_PAD + 40  
-local BACKFRAME_H = 860  
 
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -408,7 +403,7 @@ ScreenGui.Enabled = false
 
 
 local BackFrame = Instance.new("Frame")
-BackFrame.Size = UDim2.new(0, BACKFRAME_W, 0, BACKFRAME_H)
+BackFrame.Size = UDim2.new(0, 1180, 0, 820)
 BackFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 BackFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 BackFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 55)
@@ -432,6 +427,7 @@ local TopBarCorner = Instance.new("UICorner")
 TopBarCorner.CornerRadius = UDim.new(0, 10)
 TopBarCorner.Parent = TopBar
 
+
 local TopBarExtend = Instance.new("Frame")
 TopBarExtend.Size = UDim2.new(1, 0, 0, 10)
 TopBarExtend.Position = UDim2.new(0, 0, 1, -10)
@@ -445,27 +441,26 @@ local EmoteName = Instance.new("TextLabel")
 EmoteName.Name = "EmoteName"
 EmoteName.Text = "Select an Emote"
 EmoteName.Font = Enum.Font.GothamBold
-EmoteName.TextSize = 24
+EmoteName.TextSize = 28
 EmoteName.TextColor3 = Color3.new(1, 1, 1)
 EmoteName.BackgroundTransparency = 1
-EmoteName.Size = UDim2.new(0.5, 0, 1, 0)
-EmoteName.Position = UDim2.new(0.02, 0, 0, 0)
+EmoteName.Size = UDim2.new(0.6, 0, 1, 0)
+EmoteName.Position = UDim2.new(0.05, 0, 0, 0)
 EmoteName.TextXAlignment = Enum.TextXAlignment.Left
 EmoteName.Parent = TopBar
 
 
-
 local PresetsButton = Instance.new("TextButton")
-PresetsButton.Size = UDim2.new(0, 80, 0, 34)
-PresetsButton.Position = UDim2.new(0, -90, 0.5, -17)
-PresetsButton.AnchorPoint = Vector2.new(0, 0)
+PresetsButton.Size = UDim2.new(0, 90, 0, 35)
+PresetsButton.Position = UDim2.new(0, -100, 0.5, 0)
+PresetsButton.AnchorPoint = Vector2.new(0, 0.5)
 PresetsButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
 PresetsButton.BorderSizePixel = 0
 PresetsButton.Font = Enum.Font.GothamBold
-PresetsButton.TextSize = 14
+PresetsButton.TextSize = 16
 PresetsButton.TextColor3 = Color3.new(1, 1, 1)
 PresetsButton.Text = "Presets"
-PresetsButton.Parent = BackFrame
+PresetsButton.Parent = TopBar
 
 local PresetsCorner = Instance.new("UICorner")
 PresetsCorner.CornerRadius = UDim.new(0, 6)
@@ -473,13 +468,13 @@ PresetsCorner.Parent = PresetsButton
 
 
 local CustomButton = Instance.new("TextButton")
-CustomButton.Size = UDim2.new(0, 80, 0, 34)
-CustomButton.Position = UDim2.new(1, -505, 0.5, 0)
+CustomButton.Size = UDim2.new(0, 80, 0, 35)
+CustomButton.Position = UDim2.new(1, -550, 0.5, 0)
 CustomButton.AnchorPoint = Vector2.new(0, 0.5)
 CustomButton.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
 CustomButton.BorderSizePixel = 0
 CustomButton.Font = Enum.Font.GothamBold
-CustomButton.TextSize = 13
+CustomButton.TextSize = 14
 CustomButton.TextColor3 = Color3.new(1, 1, 1)
 CustomButton.Text = "Custom"
 CustomButton.Parent = TopBar
@@ -490,13 +485,13 @@ CustomButtonCorner.Parent = CustomButton
 
 
 local FavoritesToggle = Instance.new("TextButton")
-FavoritesToggle.Size = UDim2.new(0, 80, 0, 34)
-FavoritesToggle.Position = UDim2.new(1, -415, 0.5, 0)
+FavoritesToggle.Size = UDim2.new(0, 90, 0, 35)
+FavoritesToggle.Position = UDim2.new(1, -460, 0.5, 0)
 FavoritesToggle.AnchorPoint = Vector2.new(0, 0.5)
 FavoritesToggle.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
 FavoritesToggle.BorderSizePixel = 0
 FavoritesToggle.Font = Enum.Font.GothamBold
-FavoritesToggle.TextSize = 13
+FavoritesToggle.TextSize = 14
 FavoritesToggle.TextColor3 = Color3.new(1, 1, 1)
 FavoritesToggle.Text = "⭐: On"
 FavoritesToggle.Parent = TopBar
@@ -507,13 +502,13 @@ FavoritesToggleCorner.Parent = FavoritesToggle
 
 
 local SearchBar = Instance.new("TextBox")
-SearchBar.Size = UDim2.new(0, 185, 0, 34)
-SearchBar.Position = UDim2.new(1, -325, 0.5, 0)
+SearchBar.Size = UDim2.new(0, 200, 0, 35)
+SearchBar.Position = UDim2.new(1, -350, 0.5, 0)
 SearchBar.AnchorPoint = Vector2.new(0, 0.5)
 SearchBar.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
 SearchBar.BorderSizePixel = 0
 SearchBar.Font = Enum.Font.Gotham
-SearchBar.TextSize = 15
+SearchBar.TextSize = 16
 SearchBar.TextColor3 = Color3.new(1, 1, 1)
 SearchBar.PlaceholderText = "Search"
 SearchBar.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
@@ -532,16 +527,16 @@ SearchPadding.Parent = SearchBar
 
 
 local SortButton = Instance.new("TextButton")
-SortButton.Size = UDim2.new(0, 65, 0, 34)
-SortButton.Position = UDim2.new(1, 10, 0.5, -17)
-SortButton.AnchorPoint = Vector2.new(0, 0)
+SortButton.Size = UDim2.new(0, 80, 0, 35)
+SortButton.Position = UDim2.new(1, 10, 0.5, 0)
+SortButton.AnchorPoint = Vector2.new(0, 0.5)
 SortButton.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
 SortButton.BorderSizePixel = 0
 SortButton.Font = Enum.Font.GothamBold
-SortButton.TextSize = 14
+SortButton.TextSize = 16
 SortButton.TextColor3 = Color3.new(1, 1, 1)
 SortButton.Text = "Sort"
-SortButton.Parent = BackFrame 
+SortButton.Parent = TopBar
 
 local SortCorner = Instance.new("UICorner")
 SortCorner.CornerRadius = UDim.new(0, 6)
@@ -549,13 +544,13 @@ SortCorner.Parent = SortButton
 
 
 local CloseButton = Instance.new("TextButton")
-CloseButton.Size = UDim2.new(0, 60, 0, 34)
-CloseButton.Position = UDim2.new(1, -65, 0.5, 0)
+CloseButton.Size = UDim2.new(0, 80, 0, 35)
+CloseButton.Position = UDim2.new(1, -135, 0.5, 0)
 CloseButton.AnchorPoint = Vector2.new(0, 0.5)
 CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
 CloseButton.BorderSizePixel = 0
 CloseButton.Font = Enum.Font.GothamBold
-CloseButton.TextSize = 14
+CloseButton.TextSize = 16
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.Text = "Close"
 CloseButton.Parent = TopBar
@@ -565,10 +560,9 @@ CloseCorner.CornerRadius = UDim.new(0, 6)
 CloseCorner.Parent = CloseButton
 
 
-
 local Frame = Instance.new("ScrollingFrame")
-Frame.Size = UDim2.new(1, -16, 1, -68)
-Frame.Position = UDim2.new(0, 8, 0, 64)
+Frame.Size = UDim2.new(1, -20, 1, -80)
+Frame.Position = UDim2.new(0, 10, 0, 70)
 Frame.CanvasSize = UDim2.new(0, 0, 0, 0)
 Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 Frame.ScrollingDirection = Enum.ScrollingDirection.Y
@@ -580,19 +574,10 @@ Frame.Parent = BackFrame
 
 
 local Grid = Instance.new("UIGridLayout")
-Grid.CellSize = UDim2.new(0, CELL_W, 0, CELL_H)
-Grid.CellPadding = UDim2.new(0, CELL_PAD, 0, CELL_PAD)
+Grid.CellSize = UDim2.new(0, 87, 0, 78)
+Grid.CellPadding = UDim2.new(0, 2, 0, 2)
 Grid.SortOrder = Enum.SortOrder.LayoutOrder
 Grid.Parent = Frame
-
-
-local GridPadding = Instance.new("UIPadding")
-GridPadding.PaddingTop = UDim.new(0, 4)
-GridPadding.PaddingLeft = UDim.new(0, 4)
-GridPadding.PaddingRight = UDim.new(0, 4)
-GridPadding.PaddingBottom = UDim.new(0, 4)
-GridPadding.Parent = Frame
-
 
 
 local SortFrame = Instance.new("Frame")
@@ -623,11 +608,10 @@ SortPadding.PaddingRight = UDim.new(0, 5)
 SortPadding.Parent = SortFrame
 
 
-
 local PresetsFrame = Instance.new("Frame")
 PresetsFrame.Visible = false
 PresetsFrame.Size = UDim2.new(0, 250, 0, 0)
-PresetsFrame.Position = UDim2.new(0, -205, 1, 5)
+PresetsFrame.Position = UDim2.new(0, -160, 1, 5)
 PresetsFrame.AnchorPoint = Vector2.new(0, 0)
 PresetsFrame.AutomaticSize = Enum.AutomaticSize.Y
 PresetsFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 55)
@@ -653,18 +637,16 @@ PresetsPadding.Parent = PresetsFrame
 
 
 local MadeByLabel = Instance.new("TextLabel")
-MadeByLabel.Text = "made by E6Toshiro"
+MadeByLabel.Text = "made by oirshot/Toshiro"
 MadeByLabel.Font = Enum.Font.Gotham
-MadeByLabel.TextSize = 12
+MadeByLabel.TextSize = 14
 MadeByLabel.BackgroundTransparency = 1
-MadeByLabel.TextColor3 = Color3.fromRGB(120, 120, 120)
+MadeByLabel.TextColor3 = Color3.fromRGB(250,39,0)
 MadeByLabel.BorderSizePixel = 0
-MadeByLabel.Size = UDim2.new(0, 150, 0, 18)
-MadeByLabel.Position = UDim2.new(0, 8, 1, -22)
+MadeByLabel.Size = UDim2.new(0, 200, 0, 20)
+MadeByLabel.Position = UDim2.new(0, 10, 1, -25)
 MadeByLabel.TextXAlignment = Enum.TextXAlignment.Left
 MadeByLabel.Parent = BackFrame
-
-
 
 
 local function SavePresets()
@@ -677,6 +659,7 @@ local function LoadPresets()
 			Presets = HttpService:JSONDecode(readfile("EmotePresets.txt"))
 		end)
 	end
+	
 	for i = 1, 10 do
 		if not Presets[i] then
 			Presets[i] = {}
@@ -705,20 +688,6 @@ local function LoadCustomOrder()
 	end
 end
 
-local function SortEmotes()
-	for i, Emote in pairs(Emotes) do
-		local EmoteButton = Frame:FindFirstChild(tostring(Emote.id))
-		if EmoteButton then
-			local IsFavorited = table.find(FavoritedEmotes, Emote.id)
-			EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
-			local numberLabel = EmoteButton:FindFirstChild("number")
-			if numberLabel then
-				numberLabel.Text = tostring(Emote.sort[CurrentSort])
-			end
-		end
-	end
-end
-
 local function LoadPreset(presetNum)
 	CurrentPreset = presetNum
 	FavoritedEmotes = {}
@@ -726,7 +695,8 @@ local function LoadPreset(presetNum)
 		table.insert(FavoritedEmotes, id)
 	end
 	writefile("FavoritedEmotes.txt", HttpService:JSONEncode(FavoritedEmotes))
-
+	
+	
 	for _, EmoteButton in pairs(Frame:GetChildren()) do
 		if EmoteButton:IsA("ImageButton") or EmoteButton:IsA("TextButton") then
 			local emoteId = tonumber(EmoteButton.Name)
@@ -735,6 +705,8 @@ local function LoadPreset(presetNum)
 				if Favorite then
 					local IsFavorited = table.find(FavoritedEmotes, emoteId)
 					Favorite.Image = IsFavorited and FavoriteOn or FavoriteOff
+					
+					-- Update layout order
 					for _, Emote in pairs(Emotes) do
 						if Emote.id == emoteId then
 							EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
@@ -755,9 +727,26 @@ local function SaveCurrentToPreset(presetNum)
 	SavePresets()
 end
 
+local function SortEmotes()
+	for i, Emote in pairs(Emotes) do
+		local EmoteButton = Frame:FindFirstChild(tostring(Emote.id))
+		if EmoteButton then
+			local IsFavorited = table.find(FavoritedEmotes, Emote.id)
+			EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
+			local numberLabel = EmoteButton:FindFirstChild("number")
+			if numberLabel then
+				numberLabel.Text = tostring(Emote.sort[CurrentSort])
+			end
+		end
+	end
+end
+
+-- NEW: Function to toggle favorites visibility
 local function ToggleFavorites()
 	FavoritesEnabled = not FavoritesEnabled
 	FavoritesToggle.Text = FavoritesEnabled and "⭐: On" or "⭐: Off"
+	
+	-- Update visibility of all favorite buttons
 	for _, EmoteButton in pairs(Frame:GetChildren()) do
 		if EmoteButton:IsA("ImageButton") then
 			local Favorite = EmoteButton:FindFirstChild("favorite")
@@ -768,11 +757,14 @@ local function ToggleFavorites()
 	end
 end
 
+
 local function ToggleCustomDragMode()
 	CustomDragMode = not CustomDragMode
+	
 	if CustomDragMode then
 		CustomButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
 		CustomButton.Text = "Custom ✓"
+		-- Switch to custom order if not already
 		if CurrentSort ~= "customorder" then
 			CurrentSort = "customorder"
 			SortEmotes()
@@ -783,16 +775,25 @@ local function ToggleCustomDragMode()
 	end
 end
 
+
 local function SwapEmotes(emote1Id, emote2Id)
 	local emote1, emote2
+	
 	for _, emote in ipairs(Emotes) do
-		if emote.id == emote1Id then emote1 = emote
-		elseif emote.id == emote2Id then emote2 = emote end
+		if emote.id == emote1Id then
+			emote1 = emote
+		elseif emote.id == emote2Id then
+			emote2 = emote
+		end
 	end
+	
 	if emote1 and emote2 then
+		-- Swap their custom order values
 		local temp = emote1.sort.customorder
 		emote1.sort.customorder = emote2.sort.customorder
 		emote2.sort.customorder = temp
+		
+		-- Update UI
 		SortEmotes()
 		SaveCustomOrder()
 	end
@@ -800,13 +801,13 @@ end
 
 local function createsort(order, text, sort)
 	local bt = Instance.new("TextButton")
-	bt.Size = UDim2.new(1, -10, 0, 32)
+	bt.Size = UDim2.new(1, -10, 0, 35)
 	bt.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
 	bt.LayoutOrder = order
 	bt.TextColor3 = Color3.new(1, 1, 1)
 	bt.Text = text
 	bt.Font = Enum.Font.Gotham
-	bt.TextSize = 13
+	bt.TextSize = 14
 	bt.BorderSizePixel = 0
 	bt.ZIndex = 11
 
@@ -814,14 +815,22 @@ local function createsort(order, text, sort)
 	corner.CornerRadius = UDim.new(0, 4)
 	corner.Parent = bt
 
-	bt.MouseEnter:Connect(function() bt.BackgroundColor3 = Color3.fromRGB(80, 85, 90) end)
-	bt.MouseLeave:Connect(function() bt.BackgroundColor3 = Color3.fromRGB(60, 65, 70) end)
+	bt.MouseEnter:Connect(function()
+		bt.BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+	end)
+
+	bt.MouseLeave:Connect(function()
+		bt.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+	end)
 
 	bt.MouseButton1Click:Connect(function()
 		SortFrame.Visible = false
 		CurrentSort = sort
 		SortEmotes()
-		if CustomDragMode then ToggleCustomDragMode() end
+		-- Disable custom drag mode when switching sorts
+		if CustomDragMode then
+			ToggleCustomDragMode()
+		end
 	end)
 
 	bt.Parent = SortFrame
@@ -830,19 +839,19 @@ end
 
 local function createpreset(order, presetNum)
 	local container = Instance.new("Frame")
-	container.Size = UDim2.new(1, -10, 0, 32)
+	container.Size = UDim2.new(1, -10, 0, 35)
 	container.BackgroundTransparency = 1
 	container.LayoutOrder = order
 	container.Parent = PresetsFrame
-
+	
 	local loadBtn = Instance.new("TextButton")
-	loadBtn.Size = UDim2.new(0, 155, 1, 0)
+	loadBtn.Size = UDim2.new(0, 150, 1, 0)
 	loadBtn.Position = UDim2.new(0, 0, 0, 0)
 	loadBtn.BackgroundColor3 = CurrentPreset == presetNum and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(60, 65, 70)
 	loadBtn.TextColor3 = Color3.new(1, 1, 1)
 	loadBtn.Text = "Preset " .. presetNum
 	loadBtn.Font = Enum.Font.Gotham
-	loadBtn.TextSize = 13
+	loadBtn.TextSize = 14
 	loadBtn.BorderSizePixel = 0
 	loadBtn.ZIndex = 11
 	loadBtn.Parent = container
@@ -852,8 +861,8 @@ local function createpreset(order, presetNum)
 	loadCorner.Parent = loadBtn
 
 	local saveBtn = Instance.new("TextButton")
-	saveBtn.Size = UDim2.new(0, 70, 1, 0)
-	saveBtn.Position = UDim2.new(1, -70, 0, 0)
+	saveBtn.Size = UDim2.new(0, 80, 1, 0)
+	saveBtn.Position = UDim2.new(1, -80, 0, 0)
 	saveBtn.BackgroundColor3 = Color3.fromRGB(80, 140, 80)
 	saveBtn.TextColor3 = Color3.new(1, 1, 1)
 	saveBtn.Text = "Save"
@@ -868,8 +877,11 @@ local function createpreset(order, presetNum)
 	saveCorner.Parent = saveBtn
 
 	loadBtn.MouseEnter:Connect(function()
-		if CurrentPreset ~= presetNum then loadBtn.BackgroundColor3 = Color3.fromRGB(80, 85, 90) end
+		if CurrentPreset ~= presetNum then
+			loadBtn.BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+		end
 	end)
+
 	loadBtn.MouseLeave:Connect(function()
 		loadBtn.BackgroundColor3 = CurrentPreset == presetNum and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(60, 65, 70)
 	end)
@@ -877,6 +889,7 @@ local function createpreset(order, presetNum)
 	loadBtn.MouseButton1Click:Connect(function()
 		LoadPreset(presetNum)
 		PresetsFrame.Visible = false
+		-- Update all preset buttons
 		for _, child in pairs(PresetsFrame:GetChildren()) do
 			if child:IsA("Frame") then
 				local btn = child:FindFirstChildOfClass("TextButton")
@@ -888,11 +901,17 @@ local function createpreset(order, presetNum)
 		end
 	end)
 
-	saveBtn.MouseEnter:Connect(function() saveBtn.BackgroundColor3 = Color3.fromRGB(100, 160, 100) end)
-	saveBtn.MouseLeave:Connect(function() saveBtn.BackgroundColor3 = Color3.fromRGB(80, 140, 80) end)
+	saveBtn.MouseEnter:Connect(function()
+		saveBtn.BackgroundColor3 = Color3.fromRGB(100, 160, 100)
+	end)
+
+	saveBtn.MouseLeave:Connect(function()
+		saveBtn.BackgroundColor3 = Color3.fromRGB(80, 140, 80)
+	end)
 
 	saveBtn.MouseButton1Click:Connect(function()
 		SaveCurrentToPreset(presetNum)
+		-- Visual feedback
 		saveBtn.Text = "Saved!"
 		wait(0.5)
 		saveBtn.Text = "Save"
@@ -900,8 +919,6 @@ local function createpreset(order, presetNum)
 
 	return container
 end
-
-
 
 createsort(0, "Custom Order", "customorder")
 createsort(1, "Newest First", "newestfirst")
@@ -916,9 +933,7 @@ for i = 1, 10 do
 	createpreset(i - 1, i)
 end
 
-
-
-
+-- Button events
 SortButton.MouseButton1Click:Connect(function()
 	SortFrame.Visible = not SortFrame.Visible
 	PresetsFrame.Visible = false
@@ -929,9 +944,11 @@ PresetsButton.MouseButton1Click:Connect(function()
 	SortFrame.Visible = false
 end)
 
+
 FavoritesToggle.MouseButton1Click:Connect(function()
 	ToggleFavorites()
 end)
+
 
 CustomButton.MouseButton1Click:Connect(function()
 	ToggleCustomDragMode()
@@ -960,29 +977,50 @@ end)
 
 local function addButtonHover(button)
 	button.MouseEnter:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(80, 85, 90) }):Play()
+		TweenService:Create(button, TweenInfo.new(0.1), {
+			BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+		}):Play()
 	end)
+
 	button.MouseLeave:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(60, 65, 70) }):Play()
+		TweenService:Create(button, TweenInfo.new(0.1), {
+			BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+		}):Play()
 	end)
 end
 
 addButtonHover(SortButton)
+addButtonHover(SearchBar)
 addButtonHover(FavoritesToggle)
 
+
 CustomButton.MouseEnter:Connect(function()
-	if not CustomDragMode then CustomButton.BackgroundColor3 = Color3.fromRGB(80, 85, 90) end
+	if not CustomDragMode then
+		CustomButton.BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+	end
 end)
+
 CustomButton.MouseLeave:Connect(function()
-	if not CustomDragMode then CustomButton.BackgroundColor3 = Color3.fromRGB(60, 65, 70) end
+	if not CustomDragMode then
+		CustomButton.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+	end
 end)
 
-PresetsButton.MouseEnter:Connect(function() PresetsButton.BackgroundColor3 = Color3.fromRGB(100, 140, 220) end)
-PresetsButton.MouseLeave:Connect(function() PresetsButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200) end)
+PresetsButton.MouseEnter:Connect(function()
+	PresetsButton.BackgroundColor3 = Color3.fromRGB(100, 140, 220)
+end)
 
-CloseButton.MouseEnter:Connect(function() CloseButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80) end)
-CloseButton.MouseLeave:Connect(function() CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60) end)
+PresetsButton.MouseLeave:Connect(function()
+	PresetsButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+end)
 
+CloseButton.MouseEnter:Connect(function()
+	CloseButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+end)
+
+CloseButton.MouseLeave:Connect(function()
+	CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+end)
 
 
 local function SendNotification(title, text)
@@ -1028,7 +1066,6 @@ local function WaitForChildOfClass(parent, class)
 end
 
 
-
 for i, v in ipairs(Emotes) do v.sort.customorder = i end
 
 table.sort(Emotes, function(a, b) return a.name:lower() < b.name:lower() end)
@@ -1049,9 +1086,9 @@ for i, v in ipairs(Emotes) do v.sort.newestfirst = i end
 table.sort(Emotes, function(a, b) return a.lastupdated < b.lastupdated end)
 for i, v in ipairs(Emotes) do v.sort.oldestfirst = i end
 
-
+-- Load favorites and presets
 LoadPresets()
-LoadCustomOrder()
+LoadCustomOrder() -- NEW: Load saved custom order
 if isfile("FavoritedEmotes.txt") then
 	pcall(function()
 		FavoritedEmotes = HttpService:JSONDecode(readfile("FavoritedEmotes.txt"))
@@ -1060,12 +1097,10 @@ else
 	writefile("FavoritedEmotes.txt", HttpService:JSONEncode(FavoritedEmotes))
 end
 
-
-
-
+-- Character setup
 local function CharacterAdded(Character)
 	for _, v in pairs(Frame:GetChildren()) do
-		if not v:IsA("UIGridLayout") and not v:IsA("UIPadding") then
+		if not v:IsA("UIGridLayout") then
 			v:Destroy()
 		end
 	end
@@ -1075,14 +1110,14 @@ local function CharacterAdded(Character)
 
 
 	local random = Instance.new("TextButton")
-	random.Size = UDim2.new(0, CELL_W, 0, CELL_H)
+	random.Size = UDim2.new(0, 87, 0, 80)
 	random.LayoutOrder = 0
 	random.TextColor3 = Color3.new(1, 1, 1)
 	random.BorderSizePixel = 0
 	random.BackgroundColor3 = Color3.fromRGB(100, 120, 100)
 	random.BackgroundTransparency = 0.4
 	random.Font = Enum.Font.GothamBold
-	random.TextSize = 15
+	random.TextSize = 16
 	random.Text = "Random"
 	random:SetAttribute("name", "Random")
 
@@ -1116,7 +1151,7 @@ local function CharacterAdded(Character)
 		EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
 		EmoteButton.Name = tostring(Emote.id)
 		EmoteButton:SetAttribute("name", Emote.name)
-		EmoteButton.Size = UDim2.new(0, CELL_W, 0, CELL_H)
+		EmoteButton.Size = UDim2.new(0, 87, 0, 80)
 		EmoteButton.Image = Emote.icon
 		EmoteButton.BackgroundColor3 = Color3.fromRGB(55, 60, 65)
 		EmoteButton.BackgroundTransparency = 0.4
@@ -1126,15 +1161,16 @@ local function CharacterAdded(Character)
 		emoteCorner.CornerRadius = UDim.new(0, 8)
 		emoteCorner.Parent = EmoteButton
 
+
 		local EmoteNumber = Instance.new("TextLabel")
 		EmoteNumber.Name = "number"
 		EmoteNumber.Font = Enum.Font.GothamBold
-		EmoteNumber.TextSize = 11
+		EmoteNumber.TextSize = 12
 		EmoteNumber.BackgroundTransparency = 1
 		EmoteNumber.TextColor3 = Color3.new(1, 1, 1)
 		EmoteNumber.BorderSizePixel = 0
-		EmoteNumber.Size = UDim2.new(0, 20, 0, 18)
-		EmoteNumber.Position = UDim2.new(0, 3, 1, -21)
+		EmoteNumber.Size = UDim2.new(0, 20, 0, 20)
+		EmoteNumber.Position = UDim2.new(0, 3, 1, -23)
 		EmoteNumber.Text = tostring(Emote.sort[CurrentSort])
 		EmoteNumber.TextXAlignment = Enum.TextXAlignment.Center
 		EmoteNumber.TextYAlignment = Enum.TextYAlignment.Center
@@ -1146,27 +1182,33 @@ local function CharacterAdded(Character)
 
 		EmoteNumber.Parent = EmoteButton
 
+		
 		local Favorite = Instance.new("ImageButton")
 		Favorite.Name = "favorite"
 		Favorite.Image = IsFavorited and FavoriteOn or FavoriteOff
-		Favorite.Size = UDim2.new(0, 18, 0, 18)
-		Favorite.Position = UDim2.new(1, -21, 1, -21)
+		Favorite.Size = UDim2.new(0, 20, 0, 20)
+		Favorite.Position = UDim2.new(1, -23, 1, -23)
 		Favorite.BorderSizePixel = 0
 		Favorite.BackgroundTransparency = 1
 		Favorite.ZIndex = 2
 		Favorite.Visible = FavoritesEnabled
 		Favorite.Parent = EmoteButton
 
+		
 		EmoteButton.MouseButton1Click:Connect(function()
+			
 			if CustomDragMode and CurrentSort == "customorder" then
 				if DraggedEmote == nil then
+					
 					DraggedEmote = Emote.id
 					EmoteButton.BackgroundColor3 = Color3.fromRGB(100, 140, 220)
 					EmoteButton.BackgroundTransparency = 0.2
 				else
+					
 					if DraggedEmote ~= Emote.id then
 						SwapEmotes(DraggedEmote, Emote.id)
 					end
+					
 					local draggedButton = Frame:FindFirstChild(tostring(DraggedEmote))
 					if draggedButton then
 						draggedButton.BackgroundColor3 = Color3.fromRGB(55, 60, 65)
@@ -1175,6 +1217,7 @@ local function CharacterAdded(Character)
 					DraggedEmote = nil
 				end
 			else
+				
 				PlayEmote(Emote.name, Emote.id)
 			end
 		end)
@@ -1216,8 +1259,6 @@ end
 LocalPlayer.CharacterAdded:Connect(CharacterAdded)
 
 
-
-
 local function openemotes(_, state)
 	if state == Enum.UserInputState.Begin then
 		ScreenGui.Enabled = not ScreenGui.Enabled
@@ -1230,6 +1271,7 @@ else
 	ContextActionService:BindCoreActionAtPriority("Emote Menu", openemotes, true, 2001, Enum.KeyCode.Comma)
 end
 
+
 ScreenGui:GetPropertyChangedSignal("Enabled"):Connect(function()
 	if ScreenGui.Enabled then
 		EmoteName.Text = "Select an Emote"
@@ -1237,7 +1279,7 @@ ScreenGui:GetPropertyChangedSignal("Enabled"):Connect(function()
 		SortFrame.Visible = false
 		PresetsFrame.Visible = false
 		GuiService:SetEmotesMenuOpen(false)
-
+		
 		if DraggedEmote then
 			local draggedButton = Frame:FindFirstChild(tostring(DraggedEmote))
 			if draggedButton then
@@ -1251,7 +1293,9 @@ end)
 
 if not IsStudio then
 	GuiService.EmotesMenuOpenChanged:Connect(function(isopen)
-		if isopen then ScreenGui.Enabled = false end
+		if isopen then
+			ScreenGui.Enabled = false
+		end
 	end)
 end
 
@@ -1259,9 +1303,7 @@ GuiService.MenuOpened:Connect(function()
 	ScreenGui.Enabled = false
 end)
 
-
-
-
+-- Parent ScreenGui
 if not game:IsLoaded() then game.Loaded:Wait() end
 
 if IsStudio then
@@ -1278,4 +1320,4 @@ else
 	end
 end
 
-print("Emote Wheel (10x9 Grid) loaded! Press ',' (comma) to open.")
+print("Improved Emote Wheel with Presets and Custom Drag loaded! Press ',' (comma) to open.")

@@ -1,0 +1,583 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+
+--------------------------------------------------
+-- CHARACTER
+--------------------------------------------------
+
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+--------------------------------------------------
+-- ANIMATIONS
+--------------------------------------------------
+
+local animationData = {
+	{key = Enum.KeyCode.One,   id = "rbxassetid://11137338685",    name = "VIP M"},
+	{key = Enum.KeyCode.Two,   id = "rbxassetid://137445502103066", name = "VIP 03"},
+	{key = Enum.KeyCode.Three, id = "rbxassetid://17619014027",    name = "PUNCH"},
+	{key = Enum.KeyCode.Four,  id = "rbxassetid://13027233338",    name = "HANDSTAND"},
+
+	{key = Enum.KeyCode.Five,  id = "rbxassetid://124385779438289", name = "GHOSTLY"},
+	{key = Enum.KeyCode.Six,   id = "rbxassetid://116818881329505", name = "LOG"},
+	{key = Enum.KeyCode.Seven, id = "rbxassetid://134763058840745", name = "OOF"},
+	{key = Enum.KeyCode.Eight, id = "rbxassetid://14852161489",     name = "DIE"},
+}
+
+--------------------------------------------------
+-- COLORS
+--------------------------------------------------
+
+local COLORS = {
+	Background = Color3.fromRGB(42, 42, 42),
+	Header = Color3.fromRGB(28, 28, 28),
+
+	Button = Color3.fromRGB(60, 60, 60),
+	Hover = Color3.fromRGB(80, 80, 80),
+	Playing = Color3.fromRGB(40, 180, 40),
+
+	Mini = Color3.fromRGB(255, 95, 95),
+	Huge = Color3.fromRGB(100, 100, 255),
+	Wide = Color3.fromRGB(255, 195, 95),
+
+	White = Color3.fromRGB(255, 255, 255),
+	Close = Color3.fromRGB(190, 55, 55),
+}
+
+--------------------------------------------------
+-- ANIMATION STORAGE
+--------------------------------------------------
+
+local animations = {}
+
+for i, data in ipairs(animationData) do
+
+	local animation = Instance.new("Animation")
+	animation.AnimationId = data.id
+
+	animations[i] = {
+		animation = animation,
+		track = nil,
+		playing = false,
+		button = nil,
+	}
+end
+
+--------------------------------------------------
+-- GUI
+--------------------------------------------------
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AnimationsGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 284, 0, 173)
+MainFrame.Position = UDim2.new(0.85, 0, 0.5, -86)
+MainFrame.BackgroundColor3 = COLORS.Background
+MainFrame.BorderSizePixel = 2
+MainFrame.BorderColor3 = Color3.fromRGB(55, 55, 55)
+MainFrame.Parent = ScreenGui
+
+--------------------------------------------------
+-- HEADER
+--------------------------------------------------
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(1, -55, 0, 32)
+TitleLabel.BackgroundColor3 = COLORS.Header
+TitleLabel.BorderSizePixel = 0
+TitleLabel.Text = "MADE BY TOSH ANIMATIONS"
+TitleLabel.TextColor3 = COLORS.White
+TitleLabel.TextSize = 18
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.Parent = MainFrame
+
+--------------------------------------------------
+-- MINIMIZE
+--------------------------------------------------
+
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Size = UDim2.new(0, 20, 0, 20)
+MinimizeButton.Position = UDim2.new(1, -50, 0, 6)
+MinimizeButton.BackgroundColor3 = COLORS.Button
+MinimizeButton.BorderSizePixel = 0
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = COLORS.White
+MinimizeButton.TextSize = 16
+MinimizeButton.Font = Enum.Font.GothamBold
+MinimizeButton.Parent = MainFrame
+
+--------------------------------------------------
+-- CLOSE
+--------------------------------------------------
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0, 20, 0, 20)
+CloseButton.Position = UDim2.new(1, -25, 0, 6)
+CloseButton.BackgroundColor3 = COLORS.Close
+CloseButton.BorderSizePixel = 0
+CloseButton.Text = "X"
+CloseButton.TextColor3 = COLORS.White
+CloseButton.TextSize = 14
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.Parent = MainFrame
+
+--------------------------------------------------
+-- DRAGGING
+--------------------------------------------------
+
+local dragging = false
+local dragStart
+local startPosition
+
+TitleLabel.InputBegan:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		dragging = true
+	dragStart = input.Position
+		startPosition = MainFrame.Position
+	end
+end)
+
+TitleLabel.InputEnded:Connect(function(input)
+
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+
+		local delta = input.Position - dragStart
+
+		MainFrame.Position = UDim2.new(
+			startPosition.X.Scale,
+			startPosition.X.Offset + delta.X,
+
+			startPosition.Y.Scale,
+			startPosition.Y.Offset + delta.Y
+		)
+	end
+end)
+
+--------------------------------------------------
+-- ANIMATION CONTAINER
+--------------------------------------------------
+
+local AnimationsContainer = Instance.new("Frame")
+AnimationsContainer.Size = UDim2.new(1, -20, 0, 65)
+AnimationsContainer.Position = UDim2.new(0, 10, 0, 40)
+AnimationsContainer.BackgroundTransparency = 1
+AnimationsContainer.Parent = MainFrame
+
+local Grid = Instance.new("UIGridLayout")
+Grid.CellSize = UDim2.new(0, 61, 0, 30)
+Grid.CellPadding = UDim2.new(0, 5, 0, 5)
+Grid.FillDirectionMaxCells = 4
+Grid.SortOrder = Enum.SortOrder.LayoutOrder
+Grid.Parent = AnimationsContainer
+
+--------------------------------------------------
+-- PLAY ANIMATION FUNCTION
+--------------------------------------------------
+
+local function stopAllAnimations()
+
+	for _, data in ipairs(animations) do
+
+		if data.track then
+			data.track:Stop(0.15)
+		end
+
+		data.playing = false
+
+		if data.button then
+			data.button.BackgroundColor3 = COLORS.Button
+		end
+	end
+end
+
+
+local function playAnimation(index)
+
+	local data = animations[index]
+
+	if not data then
+		return
+	end
+
+	--------------------------------------------------
+	-- IF ALREADY PLAYING -> STOP
+	--------------------------------------------------
+
+	if data.playing then
+
+		if data.track then
+			data.track:Stop(0.15)
+		end
+
+		data.playing = false
+
+		if data.button then
+			data.button.BackgroundColor3 = COLORS.Button
+		end
+
+		return
+	end
+
+	--------------------------------------------------
+	-- STOP OTHER ANIMATIONS
+	--------------------------------------------------
+
+	for i, otherData in ipairs(animations) do
+
+		if i ~= index and otherData.playing then
+
+			if otherData.track then
+				otherData.track:Stop(0.15)
+			end
+
+			otherData.playing = false
+
+			if otherData.button then
+				otherData.button.BackgroundColor3 = COLORS.Button
+			end
+		end
+	end
+
+	--------------------------------------------------
+	-- REFRESH CHARACTER
+	--------------------------------------------------
+
+	if not character or not character.Parent then
+
+		character = player.Character or player.CharacterAdded:Wait()
+		humanoid = character:WaitForChild("Humanoid")
+		animator = humanoid:WaitForChild("Animator")
+	end
+
+	--------------------------------------------------
+	-- CREATE TRACK
+	--------------------------------------------------
+
+	if not data.track then
+
+		data.track = animator:LoadAnimation(data.animation)
+
+		-- Make animations continue until stopped
+		data.track.Looped = true
+	end
+
+	--------------------------------------------------
+	-- PLAY
+	--------------------------------------------------
+
+	if data.track then
+
+		data.track:Play(0.15)
+
+		data.playing = true
+
+		if data.button then
+			data.button.BackgroundColor3 = COLORS.Playing
+		end
+	end
+end
+
+--------------------------------------------------
+-- CREATE ANIMATION BUTTONS
+--------------------------------------------------
+
+for i, data in ipairs(animationData) do
+
+	local button = Instance.new("TextButton")
+
+	button.Name = data.name .. "Button"
+	button.BackgroundColor3 = COLORS.Button
+	button.BorderSizePixel = 0
+
+	-- Shows keybind
+	button.Text = data.name .. " [" .. i .. "]"
+
+	button.TextColor3 = COLORS.White
+	button.TextSize = 11
+	button.Font = Enum.Font.GothamBold
+	button.AutoButtonColor = false
+	button.LayoutOrder = i
+
+	button.Parent = AnimationsContainer
+
+	animations[i].button = button
+
+	button.MouseEnter:Connect(function()
+
+		if not animations[i].playing then
+			button.BackgroundColor3 = COLORS.Hover
+		end
+	end)
+
+	button.MouseLeave:Connect(function()
+
+		if not animations[i].playing then
+			button.BackgroundColor3 = COLORS.Button
+		end
+	end)
+
+	button.MouseButton1Click:Connect(function()
+		playAnimation(i)
+	end)
+end
+
+--------------------------------------------------
+-- SPECIAL BUTTONS
+--------------------------------------------------
+
+local SpecialButtonsContainer = Instance.new("Frame")
+SpecialButtonsContainer.Size = UDim2.new(1, -20, 0, 40)
+SpecialButtonsContainer.Position = UDim2.new(0, 10, 0, 123)
+SpecialButtonsContainer.BackgroundTransparency = 1
+SpecialButtonsContainer.Parent = MainFrame
+
+local SpecialGrid = Instance.new("UIGridLayout")
+SpecialGrid.CellSize = UDim2.new(0, 82, 0, 40)
+SpecialGrid.CellPadding = UDim2.new(0, 5, 0, 0)
+SpecialGrid.FillDirectionMaxCells = 3
+SpecialGrid.Parent = SpecialButtonsContainer
+
+local specialButtons = {
+	{
+		name = "MINI",
+		key = Enum.KeyCode.M,
+		event = "MiniEvent",
+		color = COLORS.Mini
+	},
+
+	{
+		name = "HUGE",
+		key = Enum.KeyCode.H,
+		event = "HugeEvent",
+		color = COLORS.Huge
+	},
+
+	{
+		name = "WIDE",
+		key = Enum.KeyCode.W,
+		event = "WideEvent",
+		color = COLORS.Wide
+	},
+}
+
+--------------------------------------------------
+-- SPECIAL BUTTON CREATION
+--------------------------------------------------
+
+for _, data in ipairs(specialButtons) do
+
+	local button = Instance.new("TextButton")
+
+	button.Name = data.name .. "Button"
+	button.BackgroundColor3 = data.color
+	button.BorderSizePixel = 0
+
+	button.Text = data.name .. " [" .. data.key.Name .. "]"
+
+	button.TextColor3 = COLORS.White
+	button.TextSize = 13
+	button.Font = Enum.Font.GothamBold
+	button.AutoButtonColor = false
+
+	button.Parent = SpecialButtonsContainer
+
+	button.MouseEnter:Connect(function()
+
+		button.BackgroundColor3 = data.color:Lerp(
+			Color3.new(1, 1, 1),
+			0.12
+		)
+	end)
+
+	button.MouseLeave:Connect(function()
+		button.BackgroundColor3 = data.color
+	end)
+
+	button.MouseButton1Click:Connect(function()
+
+		local event = ReplicatedStorage:FindFirstChild(data.event)
+
+		if event and event:IsA("RemoteEvent") then
+
+			event:FireServer()
+
+			local oldColor = data.color
+
+			button.BackgroundColor3 = COLORS.White
+
+			task.delay(0.15, function()
+
+				if button and button.Parent then
+					button.BackgroundColor3 = oldColor
+				end
+			end)
+
+		else
+			warn("RemoteEvent '" .. data.event .. "' not found!")
+		end
+	end)
+end
+
+--------------------------------------------------
+-- KEYBINDS
+--------------------------------------------------
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+
+	-- Don't activate while typing in chat/textboxes
+	if gameProcessed then
+		return
+	end
+
+	--------------------------------------------------
+	-- 1-8 ANIMATIONS
+	--------------------------------------------------
+
+	for i, data in ipairs(animationData) do
+
+		if input.KeyCode == data.key then
+			playAnimation(i)
+			return
+		end
+	end
+
+	--------------------------------------------------
+	-- MINI
+	--------------------------------------------------
+
+	if input.KeyCode == Enum.KeyCode.M then
+
+		local event = ReplicatedStorage:FindFirstChild("MiniEvent")
+
+		if event and event:IsA("RemoteEvent") then
+			event:FireServer()
+		end
+
+		return
+	end
+
+	--------------------------------------------------
+	-- HUGE
+	--------------------------------------------------
+
+	if input.KeyCode == Enum.KeyCode.H then
+
+		local event = ReplicatedStorage:FindFirstChild("HugeEvent")
+
+		if event and event:IsA("RemoteEvent") then
+			event:FireServer()
+		end
+
+		return
+	end
+
+	--------------------------------------------------
+	-- WIDE
+	--------------------------------------------------
+
+	if input.KeyCode == Enum.KeyCode.W then
+
+		local event = ReplicatedStorage:FindFirstChild("WideEvent")
+
+		if event and event:IsA("RemoteEvent") then
+			event:FireServer()
+		end
+
+		return
+	end
+
+	--------------------------------------------------
+	-- TOGGLE GUI
+	--------------------------------------------------
+
+	if input.KeyCode == Enum.KeyCode.RightShift then
+
+		MainFrame.Visible = not MainFrame.Visible
+
+		return
+	end
+end)
+
+--------------------------------------------------
+-- CHARACTER RESPAWN
+--------------------------------------------------
+
+player.CharacterAdded:Connect(function(newCharacter)
+
+	-- Stop old tracks
+	stopAllAnimations()
+
+	character = newCharacter
+	humanoid = character:WaitForChild("Humanoid")
+	animator = humanoid:WaitForChild("Animator")
+
+	-- Reset animation tracks
+	for _, data in ipairs(animations) do
+		data.track = nil
+		data.playing = false
+
+		if data.button then
+			data.button.BackgroundColor3 = COLORS.Button
+		end
+	end
+end)
+
+--------------------------------------------------
+-- MINIMIZE
+--------------------------------------------------
+
+local minimized = false
+
+MinimizeButton.MouseButton1Click:Connect(function()
+
+	minimized = not minimized
+
+	if minimized then
+
+		AnimationsContainer.Visible = false
+		SpecialButtonsContainer.Visible = false
+
+		MainFrame.Size = UDim2.new(0, 284, 0, 32)
+
+		MinimizeButton.Text = "+"
+
+	else
+
+		AnimationsContainer.Visible = true
+		SpecialButtonsContainer.Visible = true
+
+		MainFrame.Size = UDim2.new(0, 284, 0, 173)
+
+		MinimizeButton.Text = "-"
+	end
+end)
+
+--------------------------------------------------
+-- CLOSE
+--------------------------------------------------
+
+CloseButton.MouseButton1Click:Connect(function()
+
+	stopAllAnimations()
+
+	ScreenGui:Destroy()
+end)
+
+print("Animations GUI + Keybinds loaded!")

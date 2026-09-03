@@ -1,4 +1,4 @@
-ocal IsStudio = false
+local IsStudio = false
 
 local ContextActionService = game:GetService("ContextActionService")
 local HttpService = game:GetService("HttpService")

@@ -1,4 +1,4 @@
-local IsStudio = false
+ocal IsStudio = false
 
 local ContextActionService = game:GetService("ContextActionService")
 local HttpService = game:GetService("HttpService")
@@ -649,99 +649,212 @@ MadeByLabel.TextXAlignment = Enum.TextXAlignment.Left
 MadeByLabel.Parent = BackFrame
 
 
-local function SavePresets()
-	writefile("EmotePresets.txt", HttpService:JSONEncode(Presets))
+--==================================================
+-- WORKING EMOTE PRESET / FAVORITE SAVE SYSTEM
+--==================================================
+
+local PRESET_FILE = "EmotePresets.txt"
+local FAVORITE_FILE = "FavoritedEmotes.txt"
+local CUSTOM_ORDER_FILE = "EmoteCustomOrder.txt"
+
+local function HasFileAPI()
+	return typeof(isfile) == "function"
+		and typeof(readfile) == "function"
+		and typeof(writefile) == "function"
 end
 
-local function LoadPresets()
-	if isfile("EmotePresets.txt") then
-		pcall(function()
-			Presets = HttpService:JSONDecode(readfile("EmotePresets.txt"))
-		end)
-	end
-	
+local function InitializePresets()
 	for i = 1, 10 do
-		if not Presets[i] then
+		if type(Presets[i]) ~= "table" then
 			Presets[i] = {}
 		end
 	end
 end
 
-local function SaveCustomOrder()
-	local customOrder = {}
-	for i, emote in ipairs(Emotes) do
-		customOrder[emote.id] = emote.sort.customorder
+local function SavePresets()
+	InitializePresets()
+	if not HasFileAPI() then
+		return false
 	end
-	writefile("EmoteCustomOrder.txt", HttpService:JSONEncode(customOrder))
+
+	local success = pcall(function()
+		writefile(PRESET_FILE, HttpService:JSONEncode(Presets))
+	end)
+	return success
+end
+
+local function LoadPresets()
+	Presets = {}
+
+	if HasFileAPI() and isfile(PRESET_FILE) then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile(PRESET_FILE))
+		end)
+
+		if success and type(data) == "table" then
+			Presets = data
+		end
+	end
+
+	InitializePresets()
+end
+
+local function SaveFavorites()
+	if not HasFileAPI() then
+		return false
+	end
+
+	local success = pcall(function()
+		writefile(FAVORITE_FILE, HttpService:JSONEncode(FavoritedEmotes))
+	end)
+	return success
+end
+
+local function LoadFavorites()
+	FavoritedEmotes = {}
+
+	if not HasFileAPI() or not isfile(FAVORITE_FILE) then
+		return
+	end
+
+	local success, data = pcall(function()
+		return HttpService:JSONDecode(readfile(FAVORITE_FILE))
+	end)
+
+	if success and type(data) == "table" then
+		for _, id in ipairs(data) do
+			local numberID = tonumber(id)
+			if numberID then
+				table.insert(FavoritedEmotes, numberID)
+			end
+		end
+	end
+end
+
+local function SaveCustomOrder()
+	if not HasFileAPI() then
+		return false
+	end
+
+	local customOrder = {}
+	for _, emote in ipairs(Emotes) do
+		customOrder[tostring(emote.id)] = emote.sort.customorder
+	end
+
+	local success = pcall(function()
+		writefile(CUSTOM_ORDER_FILE, HttpService:JSONEncode(customOrder))
+	end)
+	return success
 end
 
 local function LoadCustomOrder()
-	if isfile("EmoteCustomOrder.txt") then
-		pcall(function()
-			local customOrder = HttpService:JSONDecode(readfile("EmoteCustomOrder.txt"))
-			for _, emote in ipairs(Emotes) do
-				if customOrder[emote.id] then
-					emote.sort.customorder = customOrder[emote.id]
-				end
+	if not HasFileAPI() or not isfile(CUSTOM_ORDER_FILE) then
+		return
+	end
+
+	pcall(function()
+		local customOrder = HttpService:JSONDecode(readfile(CUSTOM_ORDER_FILE))
+		if type(customOrder) ~= "table" then
+			return
+		end
+
+		for _, emote in ipairs(Emotes) do
+			local saved = customOrder[tostring(emote.id)] or customOrder[emote.id]
+			if tonumber(saved) then
+				emote.sort.customorder = tonumber(saved)
 			end
-		end)
+		end
+	end)
+end
+
+local function RefreshEmoteButtons()
+	for _, emote in ipairs(Emotes) do
+		local button = Frame:FindFirstChild(tostring(emote.id))
+		if button then
+			local isFavorite = table.find(FavoritedEmotes, emote.id) ~= nil
+
+			local favoriteButton = button:FindFirstChild("favorite")
+			if favoriteButton then
+				favoriteButton.Image = isFavorite and FavoriteOn or FavoriteOff
+				favoriteButton.Visible = FavoritesEnabled
+			end
+
+			local sortValue = emote.sort[CurrentSort] or emote.sort.customorder or 0
+			button.LayoutOrder = sortValue + (isFavorite and 0 or #Emotes)
+		end
 	end
 end
 
 local function LoadPreset(presetNum)
-	CurrentPreset = presetNum
-	FavoritedEmotes = {}
-	for _, id in ipairs(Presets[presetNum]) do
-		table.insert(FavoritedEmotes, id)
+	presetNum = tonumber(presetNum)
+	if not presetNum or presetNum < 1 or presetNum > 10 then
+		return false
 	end
-	writefile("FavoritedEmotes.txt", HttpService:JSONEncode(FavoritedEmotes))
-	
-	
-	for _, EmoteButton in pairs(Frame:GetChildren()) do
-		if EmoteButton:IsA("ImageButton") or EmoteButton:IsA("TextButton") then
-			local emoteId = tonumber(EmoteButton.Name)
-			if emoteId then
-				local Favorite = EmoteButton:FindFirstChild("favorite")
-				if Favorite then
-					local IsFavorited = table.find(FavoritedEmotes, emoteId)
-					Favorite.Image = IsFavorited and FavoriteOn or FavoriteOff
-					
-					-- Update layout order
-					for _, Emote in pairs(Emotes) do
-						if Emote.id == emoteId then
-							EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
-							break
-						end
-					end
-				end
-			end
+
+	InitializePresets()
+
+	local preset = Presets[presetNum]
+	if type(preset) ~= "table" then
+		preset = {}
+	end
+
+	local validIDs = {}
+	for _, emote in ipairs(Emotes) do
+		validIDs[emote.id] = true
+	end
+
+	FavoritedEmotes = {}
+	for _, id in ipairs(preset) do
+		local numberID = tonumber(id)
+		if numberID and validIDs[numberID] and not table.find(FavoritedEmotes, numberID) then
+			table.insert(FavoritedEmotes, numberID)
 		end
 	end
+
+	CurrentPreset = presetNum
+	SaveFavorites()
+	RefreshEmoteButtons()
+	return true
 end
 
 local function SaveCurrentToPreset(presetNum)
-	Presets[presetNum] = {}
-	for _, id in ipairs(FavoritedEmotes) do
-		table.insert(Presets[presetNum], id)
+	presetNum = tonumber(presetNum)
+	if not presetNum or presetNum < 1 or presetNum > 10 then
+		return false
 	end
-	SavePresets()
+
+	local snapshot = {}
+	for _, id in ipairs(FavoritedEmotes) do
+		local numberID = tonumber(id)
+		if numberID and not table.find(snapshot, numberID) then
+			table.insert(snapshot, numberID)
+		end
+	end
+
+	Presets[presetNum] = snapshot
+	CurrentPreset = presetNum
+
+	local saved = SavePresets()
+	SaveFavorites()
+	return saved
 end
 
 local function SortEmotes()
-	for i, Emote in pairs(Emotes) do
+	for _, Emote in ipairs(Emotes) do
 		local EmoteButton = Frame:FindFirstChild(tostring(Emote.id))
 		if EmoteButton then
 			local IsFavorited = table.find(FavoritedEmotes, Emote.id)
-			EmoteButton.LayoutOrder = Emote.sort[CurrentSort] + ((IsFavorited and 0) or #Emotes)
+			local sortValue = Emote.sort[CurrentSort] or Emote.sort.customorder or 0
+			EmoteButton.LayoutOrder = sortValue + ((IsFavorited and 0) or #Emotes)
+
 			local numberLabel = EmoteButton:FindFirstChild("number")
 			if numberLabel then
-				numberLabel.Text = tostring(Emote.sort[CurrentSort])
+				numberLabel.Text = tostring(sortValue)
 			end
 		end
 	end
 end
 
--- NEW: Function to toggle favorites visibility
 local function ToggleFavorites()
 	FavoritesEnabled = not FavoritesEnabled
 	FavoritesToggle.Text = FavoritesEnabled and "⭐: On" or "⭐: Off"
@@ -1088,14 +1201,9 @@ for i, v in ipairs(Emotes) do v.sort.oldestfirst = i end
 
 -- Load favorites and presets
 LoadPresets()
-LoadCustomOrder() -- NEW: Load saved custom order
-if isfile("FavoritedEmotes.txt") then
-	pcall(function()
-		FavoritedEmotes = HttpService:JSONDecode(readfile("FavoritedEmotes.txt"))
-	end)
-else
-	writefile("FavoritedEmotes.txt", HttpService:JSONEncode(FavoritedEmotes))
-end
+LoadCustomOrder()
+LoadFavorites()
+InitializePresets()
 
 -- Character setup
 local function CharacterAdded(Character)
@@ -1246,7 +1354,7 @@ local function CharacterAdded(Character)
 				Favorite.Image = FavoriteOn
 				EmoteButton.LayoutOrder = Emote.sort[CurrentSort]
 			end
-			writefile("FavoritedEmotes.txt", HttpService:JSONEncode(FavoritedEmotes))
+			SaveFavorites()
 		end)
 
 		EmoteButton.Parent = Frame

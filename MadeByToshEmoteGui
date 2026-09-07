@@ -610,7 +610,7 @@ SortPadding.Parent = SortFrame
 
 local PresetsFrame = Instance.new("Frame")
 PresetsFrame.Visible = false
-PresetsFrame.Size = UDim2.new(0, 250, 0, 0)
+PresetsFrame.Size = UDim2.new(0, 320, 0, 0)
 PresetsFrame.Position = UDim2.new(0, -160, 1, 5)
 PresetsFrame.AnchorPoint = Vector2.new(0, 0)
 PresetsFrame.AutomaticSize = Enum.AutomaticSize.Y
@@ -651,6 +651,7 @@ MadeByLabel.Parent = BackFrame
 
 --==================================================
 -- WORKING EMOTE PRESET / FAVORITE SAVE SYSTEM
+-- CUSTOM PRESET NAMES + EMOTES + PERSISTENT SAVE
 --==================================================
 
 local PRESET_FILE = "EmotePresets.txt"
@@ -663,16 +664,61 @@ local function HasFileAPI()
 		and typeof(writefile) == "function"
 end
 
+local function DefaultPresetName(presetNum)
+	return "Preset " .. tostring(presetNum)
+end
+
+local function NormalizePreset(presetNum)
+	presetNum = tonumber(presetNum)
+	if not presetNum or presetNum < 1 or presetNum > 10 then
+		return nil
+	end
+
+	local preset = Presets[presetNum]
+
+	-- New format:
+	-- { name = "My Dances", emotes = {123, 456} }
+	if type(preset) == "table" and type(preset.emotes) == "table" then
+		if type(preset.name) ~= "string" or preset.name:gsub("%s+", "") == "" then
+			preset.name = DefaultPresetName(presetNum)
+		end
+		return preset
+	end
+
+	-- Old format was simply {123, 456}.
+	-- Convert it without losing the saved emotes.
+	if type(preset) == "table" then
+		local oldEmotes = {}
+		for _, id in ipairs(preset) do
+			local numberID = tonumber(id)
+			if numberID then
+				table.insert(oldEmotes, numberID)
+			end
+		end
+
+		Presets[presetNum] = {
+			name = DefaultPresetName(presetNum),
+			emotes = oldEmotes
+		}
+		return Presets[presetNum]
+	end
+
+	Presets[presetNum] = {
+		name = DefaultPresetName(presetNum),
+		emotes = {}
+	}
+	return Presets[presetNum]
+end
+
 local function InitializePresets()
 	for i = 1, 10 do
-		if type(Presets[i]) ~= "table" then
-			Presets[i] = {}
-		end
+		NormalizePreset(i)
 	end
 end
 
 local function SavePresets()
 	InitializePresets()
+
 	if not HasFileAPI() then
 		return false
 	end
@@ -680,6 +726,7 @@ local function SavePresets()
 	local success = pcall(function()
 		writefile(PRESET_FILE, HttpService:JSONEncode(Presets))
 	end)
+
 	return success
 end
 
@@ -697,6 +744,8 @@ local function LoadPresets()
 	end
 
 	InitializePresets()
+	-- This also migrates older preset files to the new format.
+	SavePresets()
 end
 
 local function SaveFavorites()
@@ -707,6 +756,7 @@ local function SaveFavorites()
 	local success = pcall(function()
 		writefile(FAVORITE_FILE, HttpService:JSONEncode(FavoritedEmotes))
 	end)
+
 	return success
 end
 
@@ -772,8 +822,8 @@ local function RefreshEmoteButtons()
 		local button = Frame:FindFirstChild(tostring(emote.id))
 		if button then
 			local isFavorite = table.find(FavoritedEmotes, emote.id) ~= nil
-
 			local favoriteButton = button:FindFirstChild("favorite")
+
 			if favoriteButton then
 				favoriteButton.Image = isFavorite and FavoriteOn or FavoriteOff
 				favoriteButton.Visible = FavoritesEnabled
@@ -792,10 +842,9 @@ local function LoadPreset(presetNum)
 	end
 
 	InitializePresets()
-
-	local preset = Presets[presetNum]
-	if type(preset) ~= "table" then
-		preset = {}
+	local preset = NormalizePreset(presetNum)
+	if not preset then
+		return false
 	end
 
 	local validIDs = {}
@@ -804,7 +853,8 @@ local function LoadPreset(presetNum)
 	end
 
 	FavoritedEmotes = {}
-	for _, id in ipairs(preset) do
+
+	for _, id in ipairs(preset.emotes) do
 		local numberID = tonumber(id)
 		if numberID and validIDs[numberID] and not table.find(FavoritedEmotes, numberID) then
 			table.insert(FavoritedEmotes, numberID)
@@ -823,7 +873,10 @@ local function SaveCurrentToPreset(presetNum)
 		return false
 	end
 
+	InitializePresets()
+	local oldPreset = NormalizePreset(presetNum)
 	local snapshot = {}
+
 	for _, id in ipairs(FavoritedEmotes) do
 		local numberID = tonumber(id)
 		if numberID and not table.find(snapshot, numberID) then
@@ -831,12 +884,38 @@ local function SaveCurrentToPreset(presetNum)
 		end
 	end
 
-	Presets[presetNum] = snapshot
-	CurrentPreset = presetNum
+	Presets[presetNum] = {
+		name = oldPreset.name or DefaultPresetName(presetNum),
+		emotes = snapshot
+	}
 
+	CurrentPreset = presetNum
 	local saved = SavePresets()
 	SaveFavorites()
 	return saved
+end
+
+local function RenamePreset(presetNum, newName)
+	presetNum = tonumber(presetNum)
+	if not presetNum or presetNum < 1 or presetNum > 10 then
+		return false
+	end
+
+	InitializePresets()
+	local preset = NormalizePreset(presetNum)
+	if not preset then
+		return false
+	end
+
+	newName = tostring(newName or "")
+	newName = newName:gsub("^%s+", ""):gsub("%s+$", "")
+	if newName == "" then
+		newName = DefaultPresetName(presetNum)
+	end
+
+	preset.name = newName
+	Presets[presetNum] = preset
+	return SavePresets()
 end
 
 local function SortEmotes()
@@ -952,19 +1031,26 @@ end
 
 local function createpreset(order, presetNum)
 	local container = Instance.new("Frame")
+	container.Name = "Preset_" .. presetNum
 	container.Size = UDim2.new(1, -10, 0, 35)
 	container.BackgroundTransparency = 1
 	container.LayoutOrder = order
 	container.Parent = PresetsFrame
-	
+	container:SetAttribute("PresetNumber", presetNum)
+
+	local preset = NormalizePreset(presetNum)
+	local presetName = preset and preset.name or DefaultPresetName(presetNum)
+
 	local loadBtn = Instance.new("TextButton")
-	loadBtn.Size = UDim2.new(0, 150, 1, 0)
+	loadBtn.Name = "LoadButton"
+	loadBtn.Size = UDim2.new(0, 145, 1, 0)
 	loadBtn.Position = UDim2.new(0, 0, 0, 0)
 	loadBtn.BackgroundColor3 = CurrentPreset == presetNum and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(60, 65, 70)
 	loadBtn.TextColor3 = Color3.new(1, 1, 1)
-	loadBtn.Text = "Preset " .. presetNum
-	loadBtn.Font = Enum.Font.Gotham
-	loadBtn.TextSize = 14
+	loadBtn.Text = presetName
+	loadBtn.Font = Enum.Font.GothamBold
+	loadBtn.TextSize = 13
+	loadBtn.TextTruncate = Enum.TextTruncate.AtEnd
 	loadBtn.BorderSizePixel = 0
 	loadBtn.ZIndex = 11
 	loadBtn.Parent = container
@@ -974,8 +1060,9 @@ local function createpreset(order, presetNum)
 	loadCorner.Parent = loadBtn
 
 	local saveBtn = Instance.new("TextButton")
-	saveBtn.Size = UDim2.new(0, 80, 1, 0)
-	saveBtn.Position = UDim2.new(1, -80, 0, 0)
+	saveBtn.Name = "SaveButton"
+	saveBtn.Size = UDim2.new(0, 65, 1, 0)
+	saveBtn.Position = UDim2.new(1, -140, 0, 0)
 	saveBtn.BackgroundColor3 = Color3.fromRGB(80, 140, 80)
 	saveBtn.TextColor3 = Color3.new(1, 1, 1)
 	saveBtn.Text = "Save"
@@ -989,6 +1076,23 @@ local function createpreset(order, presetNum)
 	saveCorner.CornerRadius = UDim.new(0, 4)
 	saveCorner.Parent = saveBtn
 
+	local renameBtn = Instance.new("TextButton")
+	renameBtn.Name = "RenameButton"
+	renameBtn.Size = UDim2.new(0, 65, 1, 0)
+	renameBtn.Position = UDim2.new(1, -70, 0, 0)
+	renameBtn.BackgroundColor3 = Color3.fromRGB(90, 95, 120)
+	renameBtn.TextColor3 = Color3.new(1, 1, 1)
+	renameBtn.Text = "Rename"
+	renameBtn.Font = Enum.Font.GothamBold
+	renameBtn.TextSize = 11
+	renameBtn.BorderSizePixel = 0
+	renameBtn.ZIndex = 11
+	renameBtn.Parent = container
+
+	local renameCorner = Instance.new("UICorner")
+	renameCorner.CornerRadius = UDim.new(0, 4)
+	renameCorner.Parent = renameBtn
+
 	loadBtn.MouseEnter:Connect(function()
 		if CurrentPreset ~= presetNum then
 			loadBtn.BackgroundColor3 = Color3.fromRGB(80, 85, 90)
@@ -1000,15 +1104,17 @@ local function createpreset(order, presetNum)
 	end)
 
 	loadBtn.MouseButton1Click:Connect(function()
-		LoadPreset(presetNum)
-		PresetsFrame.Visible = false
-		-- Update all preset buttons
-		for _, child in pairs(PresetsFrame:GetChildren()) do
-			if child:IsA("Frame") then
-				local btn = child:FindFirstChildOfClass("TextButton")
-				if btn and btn.Text:match("Preset") then
-					local num = tonumber(btn.Text:match("%d+"))
-					btn.BackgroundColor3 = num == presetNum and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(60, 65, 70)
+		if LoadPreset(presetNum) then
+			PresetsFrame.Visible = false
+
+			for _, child in pairs(PresetsFrame:GetChildren()) do
+				if child:IsA("Frame") then
+					local button = child:FindFirstChild("LoadButton")
+					local number = child:GetAttribute("PresetNumber")
+
+					if button and number then
+						button.BackgroundColor3 = CurrentPreset == number and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(60, 65, 70)
+					end
 				end
 			end
 		end
@@ -1023,11 +1129,137 @@ local function createpreset(order, presetNum)
 	end)
 
 	saveBtn.MouseButton1Click:Connect(function()
-		SaveCurrentToPreset(presetNum)
-		-- Visual feedback
-		saveBtn.Text = "Saved!"
-		wait(0.5)
-		saveBtn.Text = "Save"
+		local success = SaveCurrentToPreset(presetNum)
+
+		if success then
+			saveBtn.Text = "Saved!"
+		else
+			saveBtn.Text = "No Save API"
+		end
+
+		task.delay(0.8, function()
+			if saveBtn and saveBtn.Parent then
+				saveBtn.Text = "Save"
+			end
+		end)
+	end)
+
+	renameBtn.MouseEnter:Connect(function()
+		renameBtn.BackgroundColor3 = Color3.fromRGB(115, 120, 150)
+	end)
+
+	renameBtn.MouseLeave:Connect(function()
+		renameBtn.BackgroundColor3 = Color3.fromRGB(90, 95, 120)
+	end)
+
+	renameBtn.MouseButton1Click:Connect(function()
+		local oldPopup = ScreenGui:FindFirstChild("PresetRenamePopup")
+		if oldPopup then
+			oldPopup:Destroy()
+		end
+
+		local popup = Instance.new("Frame")
+		popup.Name = "PresetRenamePopup"
+		popup.Size = UDim2.new(0, 320, 0, 145)
+		popup.AnchorPoint = Vector2.new(0.5, 0.5)
+		popup.Position = UDim2.new(0.5, 0, 0.5, 0)
+		popup.BackgroundColor3 = Color3.fromRGB(40, 44, 48)
+		popup.BorderSizePixel = 0
+		popup.ZIndex = 100
+		popup.Parent = ScreenGui
+
+		local popupCorner = Instance.new("UICorner")
+		popupCorner.CornerRadius = UDim.new(0, 10)
+		popupCorner.Parent = popup
+
+		local title = Instance.new("TextLabel")
+		title.Size = UDim2.new(1, -20, 0, 28)
+		title.Position = UDim2.new(0, 10, 0, 8)
+		title.BackgroundTransparency = 1
+		title.Text = "Rename Preset " .. presetNum
+		title.TextColor3 = Color3.new(1, 1, 1)
+		title.Font = Enum.Font.GothamBold
+		title.TextSize = 16
+		title.TextXAlignment = Enum.TextXAlignment.Left
+		title.ZIndex = 101
+		title.Parent = popup
+
+		local nameBox = Instance.new("TextBox")
+		nameBox.Size = UDim2.new(1, -20, 0, 35)
+		nameBox.Position = UDim2.new(0, 10, 0, 42)
+		nameBox.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+		nameBox.BorderSizePixel = 0
+		nameBox.TextColor3 = Color3.new(1, 1, 1)
+		nameBox.PlaceholderText = "Enter preset name..."
+		nameBox.Text = presetName
+		nameBox.ClearTextOnFocus = false
+		nameBox.Font = Enum.Font.Gotham
+		nameBox.TextSize = 14
+		nameBox.ZIndex = 101
+		nameBox.Parent = popup
+
+		local boxCorner = Instance.new("UICorner")
+		boxCorner.CornerRadius = UDim.new(0, 6)
+		boxCorner.Parent = nameBox
+
+		local apply = Instance.new("TextButton")
+		apply.Size = UDim2.new(0, 120, 0, 30)
+		apply.Position = UDim2.new(0, 10, 1, -40)
+		apply.BackgroundColor3 = Color3.fromRGB(80, 140, 80)
+		apply.Text = "Apply"
+		apply.TextColor3 = Color3.new(1, 1, 1)
+		apply.Font = Enum.Font.GothamBold
+		apply.TextSize = 13
+		apply.BorderSizePixel = 0
+		apply.ZIndex = 101
+		apply.Parent = popup
+
+		local applyCorner = Instance.new("UICorner")
+		applyCorner.CornerRadius = UDim.new(0, 6)
+		applyCorner.Parent = apply
+
+		local cancel = Instance.new("TextButton")
+		cancel.Size = UDim2.new(0, 120, 0, 30)
+		cancel.Position = UDim2.new(1, -130, 1, -40)
+		cancel.BackgroundColor3 = Color3.fromRGB(100, 60, 60)
+		cancel.Text = "Cancel"
+		cancel.TextColor3 = Color3.new(1, 1, 1)
+		cancel.Font = Enum.Font.GothamBold
+		cancel.TextSize = 13
+		cancel.BorderSizePixel = 0
+		cancel.ZIndex = 101
+		cancel.Parent = popup
+
+		local cancelCorner = Instance.new("UICorner")
+		cancelCorner.CornerRadius = UDim.new(0, 6)
+		cancelCorner.Parent = cancel
+
+		apply.MouseButton1Click:Connect(function()
+			local newName = nameBox.Text:gsub("^%s+", ""):gsub("%s+$", "")
+			if newName == "" then
+				newName = DefaultPresetName(presetNum)
+			end
+
+			if RenamePreset(presetNum, newName) then
+				presetName = newName
+				loadBtn.Text = presetName
+				popup:Destroy()
+			else
+				apply.Text = "Save Failed"
+				task.delay(0.8, function()
+					if apply and apply.Parent then
+						apply.Text = "Apply"
+					end
+				end)
+			end
+		end)
+
+		cancel.MouseButton1Click:Connect(function()
+			popup:Destroy()
+		end)
+
+		nameBox:CaptureFocus()
+		nameBox.CursorPosition = #nameBox.Text + 1
 	end)
 
 	return container

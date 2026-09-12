@@ -42,7 +42,7 @@ local Window = Rayfield:CreateWindow({
 ----------------------------------------------------------------
 
 Rayfield:Notify({
-   Title = "Baobao's Scripts",
+   Title = "Toshiro's Scripts",
    Content = "Enjoy my cheat sheets mweehehehehehe",
    Duration = 8,
    Image = "heart",
@@ -128,8 +128,6 @@ local Button = EmoteTab:CreateButton({
    Name = "Toshiro's ☁️🎀",
    Callback = function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/alwaysfeartosh2/alwaysfeartosh2.0/refs/heads/main/MadeByToshEmoteGui"))() 
-   end,
-})
    end,
 })
 

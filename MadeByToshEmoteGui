@@ -391,6 +391,9 @@ local Emotes = {
 { name = "Flying", id =140312806602708, icon = "rbxthumb://type=Asset&id=140312806602708&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 { name = "VampireIdlePose", id =95141891071861, icon = "rbxthumb://type=Asset&id=95141891071861&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
 { name = "Headless-Float", id =87952355078673, icon = "rbxthumb://type=Asset&id=87952355078673&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
+{ name = "Swim Idle", id =127630047211143, icon = "rbxthumb://type=Asset&id=127630047211143&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
+{ name = "Sinister", id =130122587580676, icon = "rbxthumb://type=Asset&id=130122587580676&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
+
 
 }
 

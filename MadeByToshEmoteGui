@@ -161,7 +161,7 @@ local Emotes = {
 
 	{ name = "Victory Dance", id = 15506503658, icon = "rbxthumb://type=Asset&id=15506503658&w=150&h=150", price = 75, lastupdated = 1705451709, sort = {} },
 
-	{ name = "Air Guitar", id = 15505454268, icon = "rbxthumb://type=Asset&id=115506499986&w=150&h=150", price = 75, lastupdated = 1705451709, sort = {} },
+	{ name = "Air Guitar", id = 3696761354, icon = "rbxthumb://type=Asset&id=3696761354&w=150&h=150", price = 75, lastupdated = 1663264200, sort = {} },
 
 	{ name = "BLACKPINK JENNIE You and Me", id = 15439457146, icon = "rbxthumb://type=Asset&id=15439457146&w=150&h=150", price = 0, lastupdated = 1701124471, sort = {} },
 

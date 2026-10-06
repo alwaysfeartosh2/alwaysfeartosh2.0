@@ -42,205 +42,105 @@ local Emotes = {
 	{ name = "Skibidi Toilet - Titan Speakerman Laser Spin", id = 103102322875221, icon = "rbxthumb://type=Asset&id=103102322875221&w=150&h=150", price = 100, lastupdated = 1727890994, sort = {} },
 	{ name = "Fashion Roadkill", id = 73683655527605, icon = "rbxthumb://type=Asset&id=73683655527605&w=150&h=150", price = 100, lastupdated = 1727716460, sort = {} },
 	{ name = "ALTÉGO - Couldn’t Care Less", id = 92859581691366, icon = "rbxthumb://type=Asset&id=92859581691366&w=150&h=150", price = 100, lastupdated = 1726765025, sort = {} },
-
 	{ name = "Fashion Klossette - Runway my way", id = 126683684984862, icon = "rbxthumb://type=Asset&id=126683684984862&w=150&h=150", price = 100, lastupdated = 1725032194, sort = {} },
-
 	{ name = "The Zabb", id = 71389516735424, icon = "rbxthumb://type=Asset&id=71389516735424&w=150&h=150", price = 100, lastupdated = 1725033197, sort = {} },
-
 	{ name = "TWICE ABCD by Nayeon", id = 18933761755, icon = "rbxthumb://type=Asset&id=18933761755&w=150&h=150", price = 0, lastupdated = 1723561480, sort = {} },
-
 	{ name = "BLACKPINK As If It's Your Last", id = 18855603653, icon = "rbxthumb://type=Asset&id=18855603653&w=150&h=150", price = 0, lastupdated = 1723090177, sort = {} },
-
 	{ name = "BLACKPINK Don't know what to do", id = 18855609889, icon = "rbxthumb://type=Asset&id=18855609889&w=150&h=150", price = 0, lastupdated = 1723090163, sort = {} },
-
 	{ name = "Olympic Dismount", id = 18666650035, icon = "rbxthumb://type=Asset&id=18666650035&w=150&h=150", price = 0, lastupdated = 1722014387, sort = {} },
-
 	{ name = "TMNT Dance", id = 18665886405, icon = "rbxthumb://type=Asset&id=18665886405&w=150&h=150", price = 150, lastupdated = 1722010678, sort = {} },
-
 	{ name = "Vroom Vroom", id = 18526410572, icon = "rbxthumb://type=Asset&id=18526410572&w=150&h=150", price = 0, lastupdated = 1721931643, sort = {} },
-
 	{ name = "Team USA Breaking Emote", id = 18526338976, icon = "rbxthumb://type=Asset&id=18526338976&w=150&h=150", price = 100, lastupdated = 1721666622, sort = {} },
-
 	{ name = "NBA WNBA Fadeaway", id = 18526373545, icon = "rbxthumb://type=Asset&id=18526373545&w=150&h=150", price = 150, lastupdated = 1721396854, sort = {} },
-
 	{ name = "Shrek Roar", id = 18524331128, icon = "rbxthumb://type=Asset&id=18524331128&w=150&h=150", price = 200, lastupdated = 1721176055, sort = {} },
-
 	{ name = "SpongeBob Imaginaaation 🌈", id = 18443268949, icon = "rbxthumb://type=Asset&id=18443268949&w=150&h=150", price = 150, lastupdated = 1720822244, sort = {} },
-
 	{ name = "SpongeBob Dance", id = 18443271885, icon = "rbxthumb://type=Asset&id=18443271885&w=150&h=150", price = 0, lastupdated = 1720722377, sort = {} },
-
 	{ name = "Vans Ollie", id = 18305539673, icon = "rbxthumb://type=Asset&id=18305539673&w=150&h=150", price = 0, lastupdated = 1719938530, sort = {} },
-
 	{ name = "Rock Out - Bebe Rexha", id = 18225077553, icon = "rbxthumb://type=Asset&id=18225077553&w=150&h=150", price = 100, lastupdated = 1719448619, sort = {} },
-
 	{ name = "Rolling Stones Guitar Strum", id = 18148839527, icon = "rbxthumb://type=Asset&id=18148839527&w=150&h=150", price = 100, lastupdated = 1718999383, sort = {} },
-
 	{ name = "Elton John - Heart Shuffle", id = 17748346932, icon = "rbxthumb://type=Asset&id=17748346932&w=150&h=150", price = 80, lastupdated = 1720191180, sort = {} },
-
 	{ name = "Sturdy Dance - Ice Spice", id = 17746270218, icon = "rbxthumb://type=Asset&id=17746270218&w=150&h=150", price = 300, lastupdated = 1717619314, sort = {} },
-
 	{ name = "Wisp - air guitar", id = 17370797454, icon = "rbxthumb://type=Asset&id=17370797454&w=150&h=150", price = 50, lastupdated = 1714753031, sort = {} },
-
 	{ name = "HUGO Let's Drive!", id = 17360720445, icon = "rbxthumb://type=Asset&id=17360720445&w=150&h=150", price = 95, lastupdated = 1721145133, sort = {} },
-
 	{ name = "Mini Kong", id = 17000058939, icon = "rbxthumb://type=Asset&id=17000058939&w=150&h=150", price = 50, lastupdated = 1712176275, sort = {} },
-
 	{ name = "BLACKPINK - Lovesick Girls", id = 16874600526, icon = "rbxthumb://type=Asset&id=16874600526&w=150&h=150", price = 0, lastupdated = 1711414329, sort = {} },
-
 	{ name = "BLACKPINK - How You Like That", id = 16874596971, icon = "rbxthumb://type=Asset&id=16874596971&w=150&h=150", price = 0, lastupdated = 1711414303, sort = {} },
-
 	{ name = "Wanna play?", id = 16646438742, icon = "rbxthumb://type=Asset&id=16646438742&w=150&h=150", price = 100, lastupdated = 1709741603, sort = {} },
-
 	{ name = "Mae Stephens – Arm Wave", id = 16584496781, icon = "rbxthumb://type=Asset&id=16584496781&w=150&h=150", price = 50, lastupdated = 1713462122, sort = {} },
-
 	{ name = "HIPMOTION - Amaarae", id = 16572756230, icon = "rbxthumb://type=Asset&id=16572756230&w=150&h=150", price = 50, lastupdated = 1709321680, sort = {} },
-
 	{ name = "Mae Stephens - Piano Hands", id = 16553249658, icon = "rbxthumb://type=Asset&id=16553249658&w=150&h=150", price = 50, lastupdated = 1713462132, sort = {} },
-
 	{ name = "BLACKPINK Boombayah Emote", id = 16553259683, icon = "rbxthumb://type=Asset&id=16553259683&w=150&h=150", price = 0, lastupdated = 1709339907, sort = {} },
-
 	{ name = "BLACKPINK DDU-DU DDU-DU", id = 16553262614, icon = "rbxthumb://type=Asset&id=16553262614&w=150&h=150", price = 0, lastupdated = 1709100790, sort = {} },
-
 	{ name = "Jawny - Stomp", id = 16392120020, icon = "rbxthumb://type=Asset&id=16392120020&w=150&h=150", price = 50, lastupdated = 1708707354, sort = {} },
-
 	{ name = "Skadoosh Emote - Kung Fu Panda 4", id = 16371235025, icon = "rbxthumb://type=Asset&id=16371235025&w=150&h=150", price = 0, lastupdated = 1708496660, sort = {} },
-
 	{ name = "Beauty Touchdown", id = 16303091119, icon = "rbxthumb://type=Asset&id=16303091119&w=150&h=150", price = 125, lastupdated = 1709320484, sort = {} },
-
 	{ name = "Sol de Janeiro - Samba", id = 16276506814, icon = "rbxthumb://type=Asset&id=16276506814&w=150&h=150", price = 100, lastupdated = 1707323755, sort = {} },
-
 	{ name = "Dave's Spin Move - Glass Animals", id = 16276501655, icon = "rbxthumb://type=Asset&id=16276501655&w=150&h=150", price = 95, lastupdated = 1707321025, sort = {} },
-
 	{ name = "TWICE I GOT YOU part 2", id = 16256253954, icon = "rbxthumb://type=Asset&id=16256253954&w=150&h=150", price = 100, lastupdated = 1708450173, sort = {} },
-
 	{ name = "TWICE I GOT YOU part 1", id = 16215060261, icon = "rbxthumb://type=Asset&id=16215060261&w=150&h=150", price = 100, lastupdated = 1708450164, sort = {} },
-
 	{ name = "BLACKPINK Ice Cream", id = 16181840356, icon = "rbxthumb://type=Asset&id=16181840356&w=150&h=150", price = 0, lastupdated = 1706724478, sort = {} },
-
 	{ name = "BLACKPINK Kill This Love", id = 16181843366, icon = "rbxthumb://type=Asset&id=16181843366&w=150&h=150", price = 0, lastupdated = 1706724495, sort = {} },
-
 	{ name = "Paris Hilton Sanasa", id = 16126526506, icon = "rbxthumb://type=Asset&id=16126526506&w=150&h=150", price = 100, lastupdated = 1706312634, sort = {} },
-
 	{ name = "Mean Girls Dance Break", id = 15963348695, icon = "rbxthumb://type=Asset&id=15963348695&w=150&h=150", price = 100, lastupdated = 1705126454, sort = {} },
-
 	{ name = "Cuco - Levitate", id = 15698511500, icon = "rbxthumb://type=Asset&id=15698511500&w=150&h=150", price = 50, lastupdated = 1708707329, sort = {} },
-
 	{ name = "ericdoa - dance", id = 15698510244, icon = "rbxthumb://type=Asset&id=15698510244&w=150&h=150", price = 50, lastupdated = 1703220462, sort = {} },
-
 	{ name = "d4vd - Backflip", id = 15694504637, icon = "rbxthumb://type=Asset&id=15694504637&w=150&h=150", price = 50, lastupdated = 1703220450, sort = {} },
-
 	{ name = "Imagine Dragons - “Bones” Dance", id = 15689314578, icon = "rbxthumb://type=Asset&id=15689314578&w=150&h=150", price = 50, lastupdated = 1703220437, sort = {} },
-
 	{ name = "GloRilla - \"Tomorrow\" Dance", id = 15689315657, icon = "rbxthumb://type=Asset&id=15689315657&w=150&h=150", price = 50, lastupdated = 1703220424, sort = {} },
-
 	{ name = "BLACKPINK ROSÉ On The Ground", id = 15679958535, icon = "rbxthumb://type=Asset&id=15679958535&w=150&h=150", price = 0, lastupdated = 1703004441, sort = {} },
-
 	{ name = "BLACKPINK LISA Money", id = 15679957363, icon = "rbxthumb://type=Asset&id=15679957363&w=150&h=150", price = 0, lastupdated = 1703004397, sort = {} },
-
 	{ name = "Festive Dance", id = 15679955281, icon = "rbxthumb://type=Asset&id=15679955281&w=150&h=150", price = 50, lastupdated = 1703018450, sort = {} },
-
 	{ name = "Yungblud Happier Jump", id = 15610015346, icon = "rbxthumb://type=Asset&id=15610015346&w=150&h=150", price = 50, lastupdated = 1702326238, sort = {} },
-
 	{ name = "Nicki Minaj Starships", id = 15571540519, icon = "rbxthumb://type=Asset&id=15571540519&w=150&h=150", price = 100, lastupdated = 1704780058, sort = {} },
-
 	{ name = "Nicki Minaj Anaconda", id = 15571539403, icon = "rbxthumb://type=Asset&id=15571539403&w=150&h=150", price = 0, lastupdated = 1702052956, sort = {} },
-
 	{ name = "Nicki Minaj Boom Boom Boom", id = 15571538346, icon = "rbxthumb://type=Asset&id=15571538346&w=150&h=150", price = 100, lastupdated = 1704779662, sort = {} },
-
 	{ name = "Nicki Minaj That's That Super Bass Emote", id = 15571536896, icon = "rbxthumb://type=Asset&id=15571536896&w=150&h=150", price = 0, lastupdated = 1702052899, sort = {} },
-
 	{ name = "Olivia Rodrigo Fall Back to Float", id = 15554016057, icon = "rbxthumb://type=Asset&id=15554016057&w=150&h=150", price = 100, lastupdated = 1704909517, sort = {} },
-
 	{ name = "Olivia Rodrigo good 4 u", id = 15554013003, icon = "rbxthumb://type=Asset&id=15554013003&w=150&h=150", price = 100, lastupdated = 1701899524, sort = {} },
-
 	{ name = "Olivia Rodrigo Head Bop", id = 15554010118, icon = "rbxthumb://type=Asset&id=15554010118&w=150&h=150", price = 100, lastupdated = 1701888912, sort = {} },
-
 	{ name = "Flex Walk", id = 15506506103, icon = "rbxthumb://type=Asset&id=15506506103&w=150&h=150", price = 175, lastupdated = 1705451683, sort = {} },
-
 	{ name = "Rock n Roll", id = 15506496093, icon = "rbxthumb://type=Asset&id=15506496093&w=150&h=150", price = 50, lastupdated = 1705451701, sort = {} },
-
 	{ name = "Victory Dance", id = 15506503658, icon = "rbxthumb://type=Asset&id=15506503658&w=150&h=150", price = 75, lastupdated = 1705451709, sort = {} },
-
 	{ name = "Air Guitar", id = 15506499986, icon = "rbxthumb://type=Asset&id=15506499986&w=150&h=150", price = 75, lastupdated = 1705451692, sort = {} },
-
 	{ name = "BLACKPINK JENNIE You and Me", id = 15439457146, icon = "rbxthumb://type=Asset&id=15439457146&w=150&h=150", price = 0, lastupdated = 1701124471, sort = {} },
-
 	{ name = "BLACKPINK JISOO Flower", id = 15439454888, icon = "rbxthumb://type=Asset&id=15439454888&w=150&h=150", price = 0, lastupdated = 1701124495, sort = {} },
-
 	{ name = "Paris Hilton - Sliving For The Groove", id = 15392927897, icon = "rbxthumb://type=Asset&id=15392927897&w=150&h=150", price = 100, lastupdated = 1700334418, sort = {} },
-
 	{ name = "Paris Hilton - Iconic IT-Grrrl", id = 15392932768, icon = "rbxthumb://type=Asset&id=15392932768&w=150&h=150", price = 100, lastupdated = 1700334426, sort = {} },
-
 	{ name = "Paris Hilton - Checking My Angles", id = 15392937495, icon = "rbxthumb://type=Asset&id=15392937495&w=150&h=150", price = 100, lastupdated = 1700334434, sort = {} },
-
 	{ name = "Bone Chillin' Bop", id = 15123050663, icon = "rbxthumb://type=Asset&id=15123050663&w=150&h=150", price = 125, lastupdated = 1698882605, sort = {} },
-
 	{ name = "BLACKPINK Shut Down - Part 2", id = 14901371589, icon = "rbxthumb://type=Asset&id=14901371589&w=150&h=150", price = 0, lastupdated = 1732579772, sort = {} },
-
 	{ name = "BLACKPINK Shut Down - Part 1", id = 14901369589, icon = "rbxthumb://type=Asset&id=14901369589&w=150&h=150", price = 0, lastupdated = 1732579788, sort = {} },
-
 	{ name = "TWICE Feel Special", id = 14900153406, icon = "rbxthumb://type=Asset&id=14900153406&w=150&h=150", price = 100, lastupdated = 1695849104, sort = {} },
-
 	{ name = "TWICE LIKEY", id = 14900151704, icon = "rbxthumb://type=Asset&id=14900151704&w=150&h=150", price = 100, lastupdated = 1695849068, sort = {} },
-
 	{ name = "BLACKPINK Pink Venom - Straight to Ya Dome", id = 14548711723, icon = "rbxthumb://type=Asset&id=14548711723&w=150&h=150", price = 0, lastupdated = 1732579764, sort = {} },
-
 	{ name = "BLACKPINK Pink Venom - I Bring the Pain Like…", id = 14548710952, icon = "rbxthumb://type=Asset&id=14548710952&w=150&h=150", price = 0, lastupdated = 1732579780, sort = {} },
-
 	{ name = "BLACKPINK Pink Venom - Get em Get em Get em", id = 14548709888, icon = "rbxthumb://type=Asset&id=14548709888&w=150&h=150", price = 0, lastupdated = 1732579749, sort = {} },
-
 	{ name = "Baby Queen - Strut", id = 14353425085, icon = "rbxthumb://type=Asset&id=14353425085&w=150&h=150", price = 50, lastupdated = 1692371026, sort = {} },
-
 	{ name = "Baby Queen - Bouncy Twirl", id = 14353423348, icon = "rbxthumb://type=Asset&id=14353423348&w=150&h=150", price = 50, lastupdated = 1692371037, sort = {} },
-
 	{ name = "Baby Queen - Face Frame", id = 14353421343, icon = "rbxthumb://type=Asset&id=14353421343&w=150&h=150", price = 50, lastupdated = 1692371043, sort = {} },
-
 	{ name = "Baby Queen - Air Guitar & Knee Slide", id = 14353417553, icon = "rbxthumb://type=Asset&id=14353417553&w=150&h=150", price = 50, lastupdated = 1692371054, sort = {} },
-
 	{ name = "YUNGBLUD – HIGH KICK", id = 14022978026, icon = "rbxthumb://type=Asset&id=14022978026&w=150&h=150", price = 300, lastupdated = 1691769382, sort = {} },
-
 	{ name = "Baby Queen - Dramatic Bow", id = 14353419229, icon = "rbxthumb://type=Asset&id=14353419229&w=150&h=150", price = 50, lastupdated = 1692371048, sort = {} },
-
 	{ name = "Tommy K-Pop Mic Drop", id = 14024722653, icon = "rbxthumb://type=Asset&id=14024722653&w=150&h=150", price = 100, lastupdated = 1691505558, sort = {} },
-
 	{ name = "Arm Twist", id = 9710992846, icon = "rbxthumb://type=Asset&id=9710992846&w=150&h=150", price = 140, lastupdated = 1691019410, sort = {} },
-
 	{ name = "TWICE Like Ooh-Ahh", id = 14124050904, icon = "rbxthumb://type=Asset&id=14124050904&w=150&h=150", price = 0, lastupdated = 1689868872, sort = {} },
-
 	{ name = "Man City Scorpion Kick", id = 13694139364, icon = "rbxthumb://type=Asset&id=13694139364&w=150&h=150", price = 0, lastupdated = 1688061827, sort = {} },
-
 	{ name = "Man City Backflip", id = 13694140956, icon = "rbxthumb://type=Asset&id=13694140956&w=150&h=150", price = 0, lastupdated = 1688061856, sort = {} },
-
 	{ name = "Tommy - Archer", id = 13823339506, icon = "rbxthumb://type=Asset&id=13823339506&w=150&h=150", price = 170, lastupdated = 1687980934, sort = {} },
-
 	{ name = "TWICE Pop by Nayeon", id = 13768975574, icon = "rbxthumb://type=Asset&id=13768975574&w=150&h=150", price = 0, lastupdated = 1687549777, sort = {} },
-
 	{ name = "TWICE Fancy", id = 13520623514, icon = "rbxthumb://type=Asset&id=13520623514&w=150&h=150", price = 0, lastupdated = 1685112803, sort = {} },
-
 	{ name = "Man City Bicycle Kick", id = 13422286833, icon = "rbxthumb://type=Asset&id=13422286833&w=150&h=150", price = 0, lastupdated = 1684429651, sort = {} },
-
 	{ name = "TWICE What Is Love", id = 13344121112, icon = "rbxthumb://type=Asset&id=13344121112&w=150&h=150", price = 0, lastupdated = 1683906913, sort = {} },
-
 	{ name = "Rise Above - The Chainsmokers", id = 13071993910, icon = "rbxthumb://type=Asset&id=13071993910&w=150&h=150", price = 400, lastupdated = 1681411386, sort = {} },
-
 	{ name = "TWICE The Feels", id = 12874468267, icon = "rbxthumb://type=Asset&id=12874468267&w=150&h=150", price = 0, lastupdated = 1679673336, sort = {} },
-
 	{ name = "Ay-Yo Dance Move - NCT 127", id = 12804173616, icon = "rbxthumb://type=Asset&id=12804173616&w=150&h=150", price = 150, lastupdated = 1679554914, sort = {} },
-
 	{ name = "TWICE Set Me Free - Dance 2", id = 12715397488, icon = "rbxthumb://type=Asset&id=12715397488&w=150&h=150", price = 0, lastupdated = 1678474350, sort = {} },
-
 	{ name = "TWICE Moonlight Sunrise ", id = 12715393154, icon = "rbxthumb://type=Asset&id=12715393154&w=150&h=150", price = 0, lastupdated = 1678474249, sort = {} },
-
 	{ name = "TWICE Set Me Free - Dance 1", id = 12715395038, icon = "rbxthumb://type=Asset&id=12715395038&w=150&h=150", price = 0, lastupdated = 1678474186, sort = {} },
-
 	{ name = "Alo Yoga Pose - Triangle", id = 12507120275, icon = "rbxthumb://type=Asset&id=12507120275&w=150&h=150", price = 50, lastupdated = 1677711156, sort = {} },
-
 	{ name = "Alo Yoga Pose - Warrior II", id = 12507106431, icon = "rbxthumb://type=Asset&id=12507106431&w=150&h=150", price = 50, lastupdated = 1677711229, sort = {} },
-
 	{ name = "Alo Yoga Pose - Lotus Position", id = 12507097350, icon = "rbxthumb://type=Asset&id=12507097350&w=150&h=150", price = 50, lastupdated = 1677711092, sort = {} },
-
 	{ name = "Sticker Dance Move - NCT 127", id = 12259885838, icon = "rbxthumb://type=Asset&id=12259885838&w=150&h=150", price = 150, lastupdated = 1675067049, sort = {} },
-
 	{ name = "Kick It Dance Move - NCT 127", id = 12259888240, icon = "rbxthumb://type=Asset&id=12259888240&w=150&h=150", price = 150, lastupdated = 1674794102, sort = {} },
 	{ name = "2 Baddies Dance Move - NCT 127", id = 12259890638, icon = "rbxthumb://type=Asset&id=12259890638&w=150&h=150", price = 150, lastupdated = 1674793873, sort = {} },
 	{ name = "Elton John - Rock Out", id = 11753545334, icon = "rbxthumb://type=Asset&id=11753545334&w=150&h=150", price = 100, lastupdated = 1670628204, sort = {} },
